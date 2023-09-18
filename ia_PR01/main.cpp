@@ -22,7 +22,6 @@ int main(int argc, char *argv[]) {
        }
        inicio = false;
      } else { // Si existe camino
-       std::cout << lectura << std::endl;
        float arista = std::stof(lectura);
        grafismo.GetGrafo()[contnodo].InsertarArista(grafismo.GetGrafo()[contnodoconexion], arista);
        grafismo.GetGrafo()[contnodoconexion].InsertarArista(grafismo.GetGrafo()[contnodo], arista);
@@ -32,6 +31,7 @@ int main(int argc, char *argv[]) {
        contnodo++;
        contnodoconexion = contnodo + 1;
      }
+               std::cout << grafismo.GetGrafo()[0].GetArista(0) << std::endl;
    }
  }
  return 0;
