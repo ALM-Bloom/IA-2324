@@ -12,7 +12,6 @@
 
 #include "grafo.h"
 #include "nodo.h"
-
 #include <iostream>
 #include <utility>
 #include <vector>
@@ -26,11 +25,16 @@ Grafo::Grafo(const Nodo &newnodo, const unsigned total_nodos, const unsigned tot
 
 }
 
+void Grafo::SetArista(const int contnodo, const int nextnodo, const float arista) {
+       vecgrafo[contnodo].InsertarArista(vecgrafo[nextnodo], arista);
+       vecgrafo[nextnodo].InsertarArista(vecgrafo[contnodo], arista);
+}
+
 bool Grafo::Insercion(const Nodo &novonodo) {
   // vecgrafo.resize(vecgrafo.size() + 1);
   // vecgrafo[novonodo.GetNodo()].push_back(std::make_pair(novonodo, coste));
   //*****************************************************************************
-  vecgrafo.push_back(novonodo);
+  vecgrafo.emplace_back(novonodo);
   return true;
 }
 

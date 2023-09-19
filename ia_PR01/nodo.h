@@ -20,12 +20,10 @@
 
 class Nodo {
 public:
-  Nodo(const unsigned id, const unsigned conexiones) : id_{id}, conexiones_{conexiones} {}
+  Nodo(const unsigned id) : id_{id} {}
   Nodo() = default;
   void InsertarArista(const Nodo& newnodo, const float arista);
   unsigned GetId() const { return id_; }
-  unsigned GetConexiones() { return conexiones_; }
-  void SetConexiones(const unsigned conexiones) { conexiones_ = conexiones; }
   Nodo GetNodo(const int posicion) { return vecaristas[posicion].first; }
   std::vector<std::pair<Nodo, float>> GetVector() { return vecaristas; }
   float GetArista(int posicion) { return vecaristas[posicion].second; } 
@@ -34,7 +32,6 @@ public:
 private:
   std::vector<std::pair<Nodo, float>> vecaristas;
   unsigned id_;
-  unsigned conexiones_;
 };
 
 #endif

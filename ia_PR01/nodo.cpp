@@ -15,6 +15,6 @@
 #include <utility>
 
 void Nodo::InsertarArista(const Nodo& newnodo, const float arista) {
-  // std::cout << "Arista con coste " << arista << " insertada" << std::endl;
-  vecaristas.push_back(std::make_pair(newnodo, arista));
+  std::cout << " Arista con coste " << arista << " insertada" << std::endl;
+  vecaristas.emplace_back(std::pair<Nodo, float>(newnodo, arista));
 }

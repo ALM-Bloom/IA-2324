@@ -7,31 +7,31 @@
 
 int main(int argc, char *argv[]) {
  bool inicio = true;
- int aristas = 0, contnodo = 1, contnodoconexion = 2;
+ int aristas = 0, contnodo = 0, contnodoconexion = 1, dep = 0;
  Grafo grafismo;
  std::string infile = argv[1];
  std::ifstream file(infile);
  std::string lectura;
  if (file.is_open()) {
    while (file >> lectura) {
-     if (inicio) {
+     if (inicio == true) {
        grafismo.set_nodos(std::stoi(lectura));
        for (unsigned i = 1; i <= std::stoi(lectura); i++) { // Bucle de construcción del Grafo
-         Nodo newnodo{i, grafismo.GetNodos() - 1};
+         Nodo newnodo{i};
          grafismo.Insercion(newnodo);
        }
        inicio = false;
      } else { // Si existe camino
        float arista = std::stof(lectura);
-       grafismo.GetGrafo()[contnodo].InsertarArista(grafismo.GetGrafo()[contnodoconexion], arista);
-       grafismo.GetGrafo()[contnodoconexion].InsertarArista(grafismo.GetGrafo()[contnodo], arista);
+       grafismo.SetArista(contnodo, contnodoconexion, arista);
        contnodoconexion++;
+       std::cout << "Para el nodo " << contnodo << " su tamaño es: " << grafismo.GetGrafo()[contnodo].GetVector().size() << " Contador: " << dep;
+       dep++;
      }
-     if (contnodoconexion == grafismo.GetNodos() - 1) {
+     if (contnodoconexion == grafismo.GetNodos()) {
        contnodo++;
        contnodoconexion = contnodo + 1;
      }
-               std::cout << grafismo.GetGrafo()[0].GetArista(0) << std::endl;
    }
  }
  return 0;
