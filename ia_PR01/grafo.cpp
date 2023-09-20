@@ -16,39 +16,21 @@
 #include <utility>
 #include <vector>
 
-Grafo::Grafo(const Nodo &newnodo, const unsigned total_nodos, const unsigned total_aristas, const float newcoste) {
-  // total_nodos_ = total_nodos;
-  // total_aristas_ = total_aristas;
-  // vecgrafo.resize(total_nodos_);
-  // vecgrafo[newnodo.GetNodo()].push_back(std::make_pair(newnodo, newcoste));
-  //*****************************************************************************
-
-}
 
 void Grafo::SetArista(const int contnodo, const int nextnodo, const float arista) {
-       vecgrafo[contnodo].InsertarArista(vecgrafo[nextnodo], arista);
-       vecgrafo[nextnodo].InsertarArista(vecgrafo[contnodo], arista);
+   vecgrafo[contnodo]->InsertarArista(vecgrafo[nextnodo], arista);
+   vecgrafo[nextnodo]->InsertarArista(vecgrafo[contnodo], arista);
 }
 
-bool Grafo::Insercion(const Nodo &novonodo) {
-  // vecgrafo.resize(vecgrafo.size() + 1);
-  // vecgrafo[novonodo.GetNodo()].push_back(std::make_pair(novonodo, coste));
-  //*****************************************************************************
+bool Grafo::Insercion(Nodo *novonodo) {
   vecgrafo.emplace_back(novonodo);
   return true;
 }
 
-bool Grafo::BusquedaBfs(const Nodo &nodoamplio) {}
+void Grafo::BusquedaBfs() {
+  
+}
 
-bool Grafo::BusquedaDfs(const Nodo &nodobusq) {}
-
-void Grafo::PrintGrafo() {
-  // for (int i = 0; i < vecgrafo.size(); i++) {
-  //   for (int j = 0; j < vecgrafo[i].size(); j++) {
-  //     std::cout << "Camino desde nodo " << vecgrafo[i][j].first.GetNodo() << " hasta el nodo ";
-  //     if (i != vecgrafo.size() - 1) {
-  //       std::cout << vecgrafo[i + 1][j].first.GetNodo() << " con coste " << vecgrafo[i][j].second << std::endl;
-  //     }
-  //   }
-  // }
+void BusquedaDfs(const int id_origen, const int id_destino) {
+  
 }
