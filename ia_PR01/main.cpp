@@ -31,6 +31,8 @@ int main(int argc, char *argv[]) {
      }
    }
  }
+ std::cout << "Selecciona una opción (0) BFS (1) DFS" << std::endl;
+ std::cin >> option;
  switch (option)
  {
  case 0:
@@ -40,7 +42,7 @@ int main(int argc, char *argv[]) {
   std::cout << "Nodo de destino: ";
   std::cin >> id_destino;
   std::cout << std::endl;
-  grafismo.BusquedaDfs(id_origen, id_destino);
+  grafismo.BusquedaBfs(id_origen, id_destino);
   break;
 
  case 1:
