@@ -13,14 +13,16 @@
 #include "grafo.h"
 #include "nodo.h"
 #include <iostream>
-#include <utility>
+#include <queue>
 #include <vector>
-#include <stack>
-
+#include <climits>
+#include <fstream>
+#include <algorithm>
+#include <utility>
 
 void Grafo::SetArista(const int contnodo, const int nextnodo, const float arista) {
-   vecgrafo[contnodo]->InsertarArista(vecgrafo[nextnodo], arista);
-   vecgrafo[nextnodo]->InsertarArista(vecgrafo[contnodo], arista);
+  vecgrafo[contnodo]->InsertarArista(vecgrafo[nextnodo], arista);
+  vecgrafo[nextnodo]->InsertarArista(vecgrafo[contnodo], arista);
 }
 
 bool Grafo::Insercion(Nodo *novonodo) {
@@ -29,25 +31,26 @@ bool Grafo::Insercion(Nodo *novonodo) {
 }
 
 void Grafo::BusquedaBfs(const int id_origen, const int id_destino) {
-  std::vector<int> visitados;
-  std::stack<int> cola;
-  int iterator = vecgrafo[id_origen - 1]->GetId();
-  while (iterator != id_destino) {
-    for (int i = 0; i <= vecgrafo[iterator]->GetVector().size(); i++) {
-      cola.push(vecgrafo[iterator]->GetVector()[i].first->GetId());
-    }
-    visitados.emplace_back(vecgrafo[iterator]->GetId());
-    for (int i = 0; i <= visitados.size(); i++) {
-      if (visitados[i] == cola.top()) {
-        cola.pop();
-      }
-    }
-    iterator = cola.top();
-        std::cout << "iterator es " << iterator << std::endl;
-    cola.pop();
-  } 
+  std::vector<bool> visitados(total_nodos_, false);
+  std::queue<int> cola_no_visitados;
+  
 }
 
-void Grafo::BusquedaDfs(const int id_origen, const int id_destino) {
 
+void Grafo::BusquedaDfs(const int id_origen, const int id_destino) {}
+
+void Grafo::Escritura(const std::vector<Nodo*> &camino, const float coste_total) {
+    if (camino.empty()) {
+        std::cout << "No se encontró un camino desde el nodo origen hasta el nodo destino." << std::endl;
+        return;
+    }
+    std::cout << "Camino desde el nodo origen hasta el nodo destino:" << std::endl;
+    for (int i = 0; i < camino.size(); ++i) {
+        std::cout << "Nodo " << camino[i]->GetId();
+        if (i < camino.size() - 1) {
+            std::cout << " -> ";
+        }
+    }
+    std::cout << std::endl;
+    std::cout << "Coste total del camino: " << coste_total << std::endl;
 }
