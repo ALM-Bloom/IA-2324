@@ -20,8 +20,10 @@ int main(int argc, char *argv[]) {
         }
         inicio = false;
       } else { // Si existe camino
+        if (std::stoi(lectura) != -1) {
         float arista = std::stof(lectura);
         grafismo.SetArista(contnodo, contnodoconexion, arista);
+        }
         contnodoconexion++;
       }
       if (contnodoconexion == grafismo.GetNodos()) {
@@ -30,6 +32,13 @@ int main(int argc, char *argv[]) {
       }
     }
   }
+  // for (int i = 0; i < grafismo.GetGrafo().size(); i++) {
+  //   std::cout << "adyacencia del Nodo: " << grafismo.GetGrafo()[i]->GetId() << std::endl;
+  //   for (int j = 0; j < grafismo.GetGrafo()[i]->GetVector().size(); j++) {
+  //     std::cout << "Conecta con el Nodo: " << grafismo.GetGrafo()[i]->GetVector()[j].first->GetId();
+  //     std::cout << " con arista coste: " << grafismo.GetGrafo()[i]->GetVector()[j].second << std::endl;
+  //   }
+  // }
   std::cout << "Selecciona una opción (0) BFS (1) DFS" << std::endl;
   std::cin >> option;
   switch (option) {

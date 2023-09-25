@@ -12,13 +12,11 @@
 
 #include "grafo.h"
 #include "nodo.h"
+#include <fstream>
 #include <iostream>
 #include <queue>
-#include <vector>
-#include <climits>
-#include <fstream>
-#include <algorithm>
 #include <utility>
+#include <vector>
 
 void Grafo::SetArista(const int contnodo, const int nextnodo, const float arista) {
   vecgrafo[contnodo]->InsertarArista(vecgrafo[nextnodo], arista);
@@ -31,26 +29,34 @@ bool Grafo::Insercion(Nodo *novonodo) {
 }
 
 void Grafo::BusquedaBfs(const int id_origen, const int id_destino) {
-  std::vector<bool> visitados(total_nodos_, false);
+  std::vector<int> inspect, generados, camino;
   std::queue<int> cola_no_visitados;
-  
+  float coste_total = 0;
+  generados.emplace_back(id_origen);
+  camino.emplace_back(id_origen);
+  cola_no_visitados.push(id_origen);
+  while (!cola_no_visitados.empty()) {
+    if (cola_no_visitados.front() == id_destino) {
+      return;
+    }
+    int iterator = cola_no_visitados.front() - 1;
+    std::cout << "Nodo inspeccionado: " << iterator + 1 << std::endl;
+    vecgrafo[iterator]->set_visitado(true);
+    inspect.emplace_back(cola_no_visitados.front());
+    inspect.emplace_back(iterator);
+    for (int i = 0; i < vecgrafo[iterator]->GetVector().size(); i++) {
+      if (!vecgrafo[iterator]->GetVector()[i].first->is_visitado()) {
+        generados.emplace_back(vecgrafo[iterator]->GetVector()[i].first->GetId());
+        vecgrafo[iterator]->GetVector()[i].first->set_visitado(true);
+        cola_no_visitados.push(vecgrafo[iterator]->GetVector()[i].first->GetId());
+      }
+    }
+    cola_no_visitados.pop();
+  }
 }
-
 
 void Grafo::BusquedaDfs(const int id_origen, const int id_destino) {}
 
-void Grafo::Escritura(const std::vector<Nodo*> &camino, const float coste_total) {
-    if (camino.empty()) {
-        std::cout << "No se encontró un camino desde el nodo origen hasta el nodo destino." << std::endl;
-        return;
-    }
-    std::cout << "Caminos desde el nodo origen hasta el nodo destino:" << std::endl;
-    for (int i = 0; i < camino.size(); ++i) {
-        std::cout << "Nodo " << camino[i]->GetId();
-        if (i < camino.size() - 1) {
-            std::cout << " -> ";
-        }
-    }
-    std::cout << std::endl;
-    std::cout << "Coste total del camino: " << coste_total << std::endl;
+void Grafo::Escritura(const std::vector<Nodo *> &camino, const float coste_total) {
+
 }

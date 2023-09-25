@@ -20,17 +20,21 @@
 
 class Nodo {
 public:
-  Nodo(const unsigned id) : id_{id} {}
+  Nodo(const unsigned id) : id_{id}, visitado_{false} {}
   Nodo() = default;
   void InsertarArista(Nodo *newnodo, const float arista);
   unsigned GetId() const { return id_; }
   Nodo *GetNodo(const int posicion) { return vecaristas[posicion].first; }
-  std::vector<std::pair<Nodo *, float>> GetVector() { return vecaristas; }
+  std::vector<std::pair<Nodo*, float>> GetVector() { return vecaristas; }
   float GetArista(int posicion) { return vecaristas[posicion].second; }
+  bool is_visitado() { return visitado_;}
+  void set_visitado(bool visitado) {visitado_ = visitado;}
 
 private:
-  std::vector<std::pair<Nodo *, float>> vecaristas;
+  std::vector<std::pair<Nodo*, float>> vecaristas;
   unsigned id_;
+  Nodo* nodoprev_;
+  bool visitado_;
 };
 
 #endif
