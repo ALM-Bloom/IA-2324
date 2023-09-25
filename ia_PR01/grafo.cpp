@@ -44,7 +44,7 @@ void Grafo::Escritura(const std::vector<Nodo*> &camino, const float coste_total)
         std::cout << "No se encontró un camino desde el nodo origen hasta el nodo destino." << std::endl;
         return;
     }
-    std::cout << "Camino desde el nodo origen hasta el nodo destino:" << std::endl;
+    std::cout << "Caminos desde el nodo origen hasta el nodo destino:" << std::endl;
     for (int i = 0; i < camino.size(); ++i) {
         std::cout << "Nodo " << camino[i]->GetId();
         if (i < camino.size() - 1) {
