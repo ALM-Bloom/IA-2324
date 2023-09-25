@@ -34,7 +34,7 @@ public:
 
 private:
   std::vector<Nodo*> vecgrafo; // es el vector de vértices que representa el grafo.
-  unsigned total_nodos_;   // Conjunto de nodos del grafo
+  unsigned total_nodos_;   // Conjunto de nodos del grafos
   unsigned total_aristas_; // Conjunto de aristas del grafo
 };
 
