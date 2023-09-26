@@ -15,5 +15,5 @@
 #include <utility>
 
 void Nodo::InsertarArista(Nodo *newnodo, const float arista) {
-  vecaristas.emplace_back(std::pair<Nodo*, float>(newnodo, arista));
+  vecaristas.emplace_back(std::pair<Nodo *, float>(newnodo, arista));
 }

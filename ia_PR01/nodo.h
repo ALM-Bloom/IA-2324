@@ -25,15 +25,17 @@ public:
   void InsertarArista(Nodo *newnodo, const float arista);
   unsigned GetId() const { return id_; }
   Nodo *GetNodo(const int posicion) { return vecaristas[posicion].first; }
-  std::vector<std::pair<Nodo*, float>> GetVector() { return vecaristas; }
-  float GetArista(int posicion) { return vecaristas[posicion].second; }
-  bool is_visitado() { return visitado_;}
-  void set_visitado(bool visitado) {visitado_ = visitado;}
-
+  std::vector<std::pair<Nodo *, float>> GetVector() { return vecaristas; }
+  bool is_visitado() { return visitado_; }
+  void set_visitado(bool visitado) { visitado_ = visitado; }
+  void SetPadre(Nodo *nodoprev) { nodoprev_ = nodoprev; }
+  Nodo *GetPadre() { return nodoprev_; }
+  float buscar_arista(const int id);
+    
 private:
-  std::vector<std::pair<Nodo*, float>> vecaristas;
+  std::vector<std::pair<Nodo *, float>> vecaristas;
   unsigned id_;
-  Nodo* nodoprev_;
+  Nodo *nodoprev_;
   bool visitado_;
 };
 

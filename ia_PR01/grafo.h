@@ -15,6 +15,7 @@
 
 #include "nodo.h"
 #include <iostream>
+#include <stack>
 #include <vector>
 
 class Grafo {
@@ -23,17 +24,17 @@ public:
   Grafo() = default;
   void BusquedaDfs(const int id_origen, const int id_destino); // Busqueda en profundidad a partir de un nodo de entrada
   bool Insercion(Nodo *novonodo); // Inserción de un Nodo nuevo al grafo. Usado iterativamente en la lectura del fichero
-// que contiene el grafo.
+  //que contiene el grafo.
   void BusquedaBfs(const int id_origen, const int id_destino); // Búsqueda en amplitud a partir de un nodo de entrada
   void set_aristas(const unsigned aristas) { total_aristas_ = aristas; }
   void set_nodos(const unsigned nodos) { total_nodos_ = nodos; }
   unsigned GetNodos() { return total_nodos_; }
-  std::vector<Nodo*> GetGrafo() { return vecgrafo; }
+  std::vector<Nodo *> GetGrafo() { return vecgrafo; }
   void SetArista(const int contnodo, const int nextnodo, const float arista);
-  void Escritura(const std::vector<Nodo*> &camino, const float coste_total);
+  void Escritura(const std::vector<int> &visitados, const std::vector<int> &generados, std::stack<int> &camino, const float coste);
 
 private:
-  std::vector<Nodo*> vecgrafo; // es el vector de vértices que representa el grafo.
+  std::vector<Nodo *> vecgrafo; // es el vector de vértices que representa el grafo.
   unsigned total_nodos_;   // Conjunto de nodos del grafos
   unsigned total_aristas_; // Conjunto de aristas del grafo
 };
