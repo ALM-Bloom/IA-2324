@@ -31,7 +31,7 @@ public:
   unsigned GetNodos() { return total_nodos_; }
   std::vector<Nodo *> GetGrafo() { return vecgrafo; }
   void SetArista(const int contnodo, const int nextnodo, const float arista);
-  void Escritura(const std::vector<int> &visitados, const std::vector<int> &generados, std::stack<int> &camino, const float coste);
+  void Escritura(const std::vector<int> &visitados, const std::vector<int> &generados, std::stack<int> &camino);
 
 private:
   std::vector<Nodo *> vecgrafo; // es el vector de vértices que representa el grafo.

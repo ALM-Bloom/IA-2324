@@ -47,6 +47,7 @@ void Grafo::BusquedaBfs(const int id_origen, const int id_destino) {
       }
       camino.push(id_origen);
       Escritura(inspect, generados, camino);
+      return;
     }
     std::cout << "Nodo inspeccionado: " << iterator + 1 << std::endl;
     vecgrafo[iterator]->set_visitado(true);
@@ -84,6 +85,7 @@ void Grafo::BusquedaDfs(const int id_origen, const int id_destino) {
       }
       camino.push(id_origen);
       Escritura(inspect, generados, camino);
+      return;
     }
     std::cout << "Nodo inspeccionado: " << iterator + 1 << std::endl;
     vecgrafo[iterator]->set_visitado(true);
@@ -103,7 +105,7 @@ void Grafo::BusquedaDfs(const int id_origen, const int id_destino) {
   std::cerr << "No se ha encontrado solución" << std::endl;
 }
 
-void Grafo::Escritura(const std::vector<int> &visitados, const std::vector<int> &generados, std::stack<int> &camino, const float coste) {
+void Grafo::Escritura(const std::vector<int> &visitados, const std::vector<int> &generados, std::stack<int> &camino) {
   std::ofstream fichero;
   fichero.open("solucion.txt", std::ios::out);
   fichero << "Camino: ";
