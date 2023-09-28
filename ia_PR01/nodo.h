@@ -33,10 +33,10 @@ public:
   float buscar_arista(const int id);
     
 private:
-  std::vector<std::pair<Nodo *, float>> vecaristas;
-  unsigned id_;
-  Nodo *nodoprev_;
-  bool visitado_;
+  std::vector<std::pair<Nodo *, float>> vecaristas; //Vector de adyacencia, (Vecino, coste).
+  unsigned id_; //Identificador del Nodo (su número de nodo)
+  Nodo *nodoprev_; //Puntero al Nodo padre en el arbol de adyacencia
+  bool visitado_; //Booleano para controlar si el nodo ha sido visitado durante el recorrido
 };
 
 #endif

@@ -30,35 +30,38 @@ bool Grafo::Insercion(Nodo *novonodo) {
 }
 
 void Grafo::BusquedaBfs(const int id_origen, const int id_destino) {
+  //Declaración de los vectores/ generadores del resultado
   std::vector<int> inspect, generados;
   std::stack<int> camino;
+  //Declaración de la cola
   std::queue<int> cola_no_visitados;
+  //Acumulador del coste.
   float coste_total = 0;
   generados.emplace_back(id_origen);
   cola_no_visitados.push(id_origen);
+  //Se establece al nodo origen el padre NULL
   vecgrafo[id_origen - 1]->SetPadre(nullptr);
-  while (!cola_no_visitados.empty()) {
-    int iterator = cola_no_visitados.front() - 1;
-    inspect.emplace_back(vecgrafo[iterator]->GetId());
-    if (cola_no_visitados.front() == id_destino) {
-      Nodo *nodo = vecgrafo[iterator];
-      while (nodo->GetPadre() != nullptr) {
-        camino.push(nodo->GetId());
-        coste_total += nodo->buscar_arista(nodo->GetPadre()->GetId());
-        nodo = nodo->GetPadre();
+  while (!cola_no_visitados.empty()) { //Mientras la cola no esté
+    int iterator = cola_no_visitados.front() - 1; //El iterator funciona a -1 del id del Nodo
+    inspect.emplace_back(vecgrafo[iterator]->GetId()); //Se inserta el nodo en el vector de visitados.
+    if (cola_no_visitados.front() == id_destino) { //Si el valor sacado de la cola es el nodo destino
+      Nodo *nodo = vecgrafo[iterator]; 
+      while (nodo->GetPadre() != nullptr) { //Mientras el nodo previo al actual no apunte a NULL
+        camino.push(nodo->GetId()); //Se añade el nodo al camino
+        coste_total += nodo->buscar_arista(nodo->GetPadre()->GetId()); //Búsqueda de la arista que conecta al nodo previo y el actual
+        nodo = nodo->GetPadre(); //Puntero cambia al nodo previo
       }
-      camino.push(id_origen);
-      Escritura(inspect, generados, camino, coste_total);
-      return;
+      camino.push(id_origen); //El nodo de partida pertenece al camino de base
+      Escritura(inspect, generados, camino, coste_total); //Envío de los datos al método de escritura
+      return; //EOF
     }
-    vecgrafo[iterator]->set_visitado(true);
-    for (int i = 0; i < vecgrafo[iterator]->GetVector().size(); i++) {
-      if (!vecgrafo[iterator]->GetVector()[i].first->is_visitado()) {
-        vecgrafo[iterator]->GetVector()[i].first->SetPadre(vecgrafo[iterator]);
-        generados.emplace_back(vecgrafo[iterator]->GetVector()[i].first->GetId());
-    //  vecgrafo[iterator]->GetVector()[i].first->set_visitado(true);
-        cola_no_visitados.push(vecgrafo[iterator]->GetVector()[i].first->GetId());
-        vecgrafo[iterator]->GetVector()[i].first->SetPadre(vecgrafo[iterator]);
+    vecgrafo[iterator]->set_visitado(true); //Se establece el nodo que se está estudiando como visitado
+    for (int i = 0; i < vecgrafo[iterator]->GetVector().size(); i++) { //Recorrido de la adyacencia del nodo
+      if (!vecgrafo[iterator]->GetVector()[i].first->is_visitado()) { //Si el nodo adyacente no ha sido visitado
+        vecgrafo[iterator]->GetVector()[i].first->SetPadre(vecgrafo[iterator]); //Se establece como nodo previo el nodo que se está estudiando
+        generados.emplace_back(vecgrafo[iterator]->GetVector()[i].first->GetId());  //El nodo adyacente se ha generado
+    //  vecgrafo[iterator]->GetVector()[i].first->set_visitado(true); 
+        cola_no_visitados.push(vecgrafo[iterator]->GetVector()[i].first->GetId()); //Se mete en la cola el nodo generado
       }
     }
     cola_no_visitados.pop();
@@ -96,7 +99,6 @@ void Grafo::BusquedaDfs(const int id_origen, const int id_destino) {
         generados.emplace_back(vecgrafo[iterator]->GetVector()[i].first->GetId());
         //  vecgrafo[iterator]->GetVector()[i].first->set_visitado(true);
         cola_no_visitados.push(vecgrafo[iterator]->GetVector()[i].first->GetId());
-        vecgrafo[iterator]->GetVector()[i].first->SetPadre(vecgrafo[iterator]);
       }
     }
   }

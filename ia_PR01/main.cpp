@@ -1,3 +1,13 @@
+/**
+ * @file main.cpp
+ * @author Alejandro M. L. (alu0101443126@ull.edu.es)
+ * @brief Declaración de la función main del programa
+ * @version 0.1
+ * @date 2023-09-28
+ *
+ * @copyright Alejandro M.L (c) 2022
+ *
+ */
 #include "grafo.h"
 #include "nodo.h"
 #include <fstream>
@@ -6,8 +16,7 @@
 
 int main(int argc, char *argv[]) {
   bool inicio = true;
-  int aristas = 0, contnodo = 0, contnodoconexion = 1, option, id_origen,
-      id_destino;
+  int aristas = 0, contnodo = 0, contnodoconexion = 1, option, id_origen, id_destino;
   Grafo grafismo;
   std::string infile = argv[1];
   std::ifstream file(infile);
@@ -22,8 +31,8 @@ int main(int argc, char *argv[]) {
         }
         inicio = false;
       } else { // Si existe camino
-        if (std::stoi(lectura) != -1) {
-          float arista = std::stof(lectura);
+        if (std::stoi(lectura) != -1) { //Si NO se lee una "no conexión"
+          float arista = std::stof(lectura); 
           grafismo.SetArista(contnodo, contnodoconexion, arista);
         }
         contnodoconexion++;

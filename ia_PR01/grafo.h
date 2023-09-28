@@ -23,8 +23,7 @@ public:
   Grafo(const Nodo &newnodo, const unsigned total_nodos, const unsigned total_aristas, const float newcoste);
   Grafo() = default;
   void BusquedaDfs(const int id_origen, const int id_destino); // Busqueda en profundidad a partir de un nodo de entrada
-  bool Insercion(Nodo *novonodo); // Inserción de un Nodo nuevo al grafo. Usado iterativamente en la lectura del fichero
-  //que contiene el grafo.
+  bool Insercion(Nodo *novonodo); // Inserción de un Nodo nuevo al grafo.
   void BusquedaBfs(const int id_origen, const int id_destino); // Búsqueda en amplitud a partir de un nodo de entrada
   void set_aristas(const unsigned aristas) { total_aristas_ = aristas; }
   void set_nodos(const unsigned nodos) { total_nodos_ = nodos; }
@@ -34,9 +33,9 @@ public:
   void Escritura(const std::vector<int> &visitados, const std::vector<int> &generados, std::stack<int> &camino, const float coste);
 
 private:
-  std::vector<Nodo *> vecgrafo; // es el vector de vértices que representa el grafo.
-  unsigned total_nodos_;   // Conjunto de nodos del grafos
-  unsigned total_aristas_; // Conjunto de aristas del grafo
+  std::vector<Nodo *> vecgrafo; //Vector que contiene todos los nodos
+  unsigned total_nodos_;   //Número total de nodos en el grafo (equivalente a vecgrafo.size)
+  unsigned total_aristas_; //Número total de aristas en el grafo (no usado)
 };
 
 #endif
