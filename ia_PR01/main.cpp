@@ -35,13 +35,10 @@ int main(int argc, char *argv[]) {
     }
   }
   // for (int i = 0; i < grafismo.GetGrafo().size(); i++) {
-  //   std::cout << "adyacencia del Nodo: " << grafismo.GetGrafo()[i]->GetId()
-  //   << std::endl; for (int j = 0; j <
+  //   std::cout << "adyacencia del Nodo: " << grafismo.GetGrafo()[i]->GetId() << std::endl; for (int j = 0; j <
   //   grafismo.GetGrafo()[i]->GetVector().size(); j++) {
   //     std::cout << "Conecta con el Nodo: " <<
-  //     grafismo.GetGrafo()[i]->GetVector()[j].first->GetId(); std::cout << "
-  //     con arista coste: " << grafismo.GetGrafo()[i]->GetVector()[j].second <<
-  //     std::endl;
+  //     grafismo.GetGrafo()[i]->GetVector()[j].first->GetId(); std::cout << "  con arista coste: " << grafismo.GetGrafo()[i]->GetVector()[j].second << std::endl;
   //   }
   // }
   std::cout << "Selecciona una opción (0) BFS (1) DFS" << std::endl;

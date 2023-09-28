@@ -39,20 +39,19 @@ void Grafo::BusquedaBfs(const int id_origen, const int id_destino) {
   vecgrafo[id_origen - 1]->SetPadre(nullptr);
   while (!cola_no_visitados.empty()) {
     int iterator = cola_no_visitados.front() - 1;
+    inspect.emplace_back(vecgrafo[iterator]->GetId());
     if (cola_no_visitados.front() == id_destino) {
       Nodo *nodo = vecgrafo[iterator];
       while (nodo->GetPadre() != nullptr) {
         camino.push(nodo->GetId());
+        coste_total += nodo->buscar_arista(nodo->GetPadre()->GetId());
         nodo = nodo->GetPadre();
       }
       camino.push(id_origen);
-      Escritura(inspect, generados, camino);
+      Escritura(inspect, generados, camino, coste_total);
       return;
     }
-    std::cout << "Nodo inspeccionado: " << iterator + 1 << std::endl;
     vecgrafo[iterator]->set_visitado(true);
-    inspect.emplace_back(cola_no_visitados.front());
-    inspect.emplace_back(iterator);
     for (int i = 0; i < vecgrafo[iterator]->GetVector().size(); i++) {
       if (!vecgrafo[iterator]->GetVector()[i].first->is_visitado()) {
         vecgrafo[iterator]->GetVector()[i].first->SetPadre(vecgrafo[iterator]);
@@ -77,20 +76,19 @@ void Grafo::BusquedaDfs(const int id_origen, const int id_destino) {
   vecgrafo[id_origen - 1]->SetPadre(nullptr);
   while (!cola_no_visitados.empty()) {
     int iterator = cola_no_visitados.top() - 1;
+    inspect.emplace_back(vecgrafo[iterator]->GetId());
     if (cola_no_visitados.top() == id_destino) {
       Nodo *nodo = vecgrafo[iterator];
       while (nodo->GetPadre() != nullptr) {
         camino.push(nodo->GetId());
+        coste_total += nodo->buscar_arista(nodo->GetPadre()->GetId());
         nodo = nodo->GetPadre();
       }
       camino.push(id_origen);
-      Escritura(inspect, generados, camino);
+      Escritura(inspect, generados, camino, coste_total);
       return;
     }
-    std::cout << "Nodo inspeccionado: " << iterator + 1 << std::endl;
     vecgrafo[iterator]->set_visitado(true);
-    inspect.emplace_back(cola_no_visitados.top());
-    inspect.emplace_back(iterator);
     cola_no_visitados.pop();
     for (int i = 0; i < vecgrafo[iterator]->GetVector().size(); i++) {
       if (!vecgrafo[iterator]->GetVector()[i].first->is_visitado()) {
@@ -105,7 +103,7 @@ void Grafo::BusquedaDfs(const int id_origen, const int id_destino) {
   std::cerr << "No se ha encontrado solución" << std::endl;
 }
 
-void Grafo::Escritura(const std::vector<int> &visitados, const std::vector<int> &generados, std::stack<int> &camino) {
+void Grafo::Escritura(const std::vector<int> &visitados, const std::vector<int> &generados, std::stack<int> &camino, const float coste) {
   std::ofstream fichero;
   fichero.open("solucion.txt", std::ios::out);
   fichero << "Camino: ";
@@ -116,5 +114,22 @@ void Grafo::Escritura(const std::vector<int> &visitados, const std::vector<int> 
     }
     camino.pop();
   }
+  fichero << "    Generados: ";
+  for (int i = 0; i < generados.size(); i++) {
+    fichero << generados[i];
+    if (i != generados.size() - 1) {
+      fichero << ", ";
+    }
+  }
+  
+  fichero << "    Visitados: ";
+  for (int i = 0; i < visitados.size(); i++) {
+    fichero << visitados[i];
+    if (i != visitados.size() - 1) {
+      fichero << ", ";
+    }
+  }
+  fichero << "    Coste: " << coste;
   fichero << std::endl;
+  return;
 }

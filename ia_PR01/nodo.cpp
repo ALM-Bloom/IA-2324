@@ -17,3 +17,13 @@
 void Nodo::InsertarArista(Nodo *newnodo, const float arista) {
   vecaristas.emplace_back(std::pair<Nodo *, float>(newnodo, arista));
 }
+
+float Nodo::buscar_arista(const int id) {
+  for (int i = 0; i < vecaristas.size(); i++) {
+    if (vecaristas[i].first->GetId() == id) {
+      return vecaristas[i].second;
+    }
+  }
+  std::cerr << "Error fatal, arista no encontrada" << std::endl;
+  return 0;
+}
