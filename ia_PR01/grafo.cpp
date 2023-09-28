@@ -114,22 +114,24 @@ void Grafo::Escritura(const std::vector<int> &visitados, const std::vector<int> 
     }
     camino.pop();
   }
-  fichero << "    Generados: ";
+    fichero << std::endl;
+  fichero << "Generados: ";
   for (int i = 0; i < generados.size(); i++) {
     fichero << generados[i];
     if (i != generados.size() - 1) {
       fichero << ", ";
     }
   }
-  
-  fichero << "    Visitados: ";
+  fichero << std::endl;
+  fichero << "Visitados: ";
   for (int i = 0; i < visitados.size(); i++) {
     fichero << visitados[i];
     if (i != visitados.size() - 1) {
       fichero << ", ";
     }
   }
-  fichero << "    Coste: " << coste;
+    fichero << std::endl;
+  fichero << "Coste: " << coste;
   fichero << std::endl;
   return;
 }
