@@ -41,8 +41,8 @@ void Grafo::BusquedaBfs(const int id_origen, const int id_destino) {
   cola_no_visitados.push(id_origen);
   //Se establece al nodo origen el padre NULL
   vecgrafo[id_origen - 1]->SetPadre(nullptr);
-  while (!cola_no_visitados.empty()) { //Mientras la cola no esté
-    int iterator = cola_no_visitados.front() - 1; //El iterator funciona a -1 del id del Nodo
+  while (!cola_no_visitados.empty()) { //Mientras la cola no esté vacía
+    int iterator = cola_no_visitados.front() - 1; //El iterator funciona a -1 del id del Nodo para acceder correctamente al vector
     inspect.emplace_back(vecgrafo[iterator]->GetId()); //Se inserta el nodo en el vector de visitados.
     if (cola_no_visitados.front() == id_destino) { //Si el valor sacado de la cola es el nodo destino
       Nodo *nodo = vecgrafo[iterator]; 
@@ -64,37 +64,40 @@ void Grafo::BusquedaBfs(const int id_origen, const int id_destino) {
         cola_no_visitados.push(vecgrafo[iterator]->GetVector()[i].first->GetId()); //Se mete en la cola el nodo generado
       }
     }
-    cola_no_visitados.pop();
+    cola_no_visitados.pop(); //Se extrae el nodo estudiado de la cola
   }
   std::cerr << "No se ha encontrado solución" << std::endl;
 }
 
 void Grafo::BusquedaDfs(const int id_origen, const int id_destino) {
+  //Declaración de los vectores/ generadores del resultado
   std::vector<int> inspect, generados;
   std::stack<int> camino;
+  //Declaración de la pila
   std::stack<int> cola_no_visitados;
-  float coste_total = 0;
-  generados.emplace_back(id_origen);
-  cola_no_visitados.push(id_origen);
-  vecgrafo[id_origen - 1]->SetPadre(nullptr);
-  while (!cola_no_visitados.empty()) {
-    int iterator = cola_no_visitados.top() - 1;
-    inspect.emplace_back(vecgrafo[iterator]->GetId());
-    if (cola_no_visitados.top() == id_destino) {
-      Nodo *nodo = vecgrafo[iterator];
-      while (nodo->GetPadre() != nullptr) {
-        camino.push(nodo->GetId());
-        coste_total += nodo->buscar_arista(nodo->GetPadre()->GetId());
-        nodo = nodo->GetPadre();
+  //Acumulador del coste total
+  float coste_total = 0; 
+  generados.emplace_back(id_origen); //El nodo de origen cuenta como generado
+  cola_no_visitados.push(id_origen); //Se introduce en la pila el nodo de partida
+  vecgrafo[id_origen - 1]->SetPadre(nullptr); //Se establece como nodo previo del origen NULL, ya que es el nodo raíz
+  while (!cola_no_visitados.empty()) { //Mientras la pila no esté vacía
+    int iterator = cola_no_visitados.top() - 1; //El iterador funciona a -1 del id del Nodo
+    inspect.emplace_back(vecgrafo[iterator]->GetId()); //Se introduce en visitados el nodo que se estudia
+    if (cola_no_visitados.top() == id_destino) { //Si se ha extraído de la pila el nodo destino
+      Nodo *nodo = vecgrafo[iterator]; //Se establece el nodo iterador como el nodo destino para la "vuelta atrás"
+      while (nodo->GetPadre() != nullptr) { //Hasta que se encuentre el nodo que apunta a NULL
+        camino.push(nodo->GetId()); //Se introduce el nodo en la pila de camino
+        coste_total += nodo->buscar_arista(nodo->GetPadre()->GetId()); //Se encuentra la arista y se suma al acumulador
+        nodo = nodo->GetPadre(); //El nodo iterador apunta al nodo previo de éste
       }
-      camino.push(id_origen);
-      Escritura(inspect, generados, camino, coste_total);
-      return;
+      camino.push(id_origen); //El nodo de origen va a formar parte del camino
+      Escritura(inspect, generados, camino, coste_total); //Llamada al método de Escritura
+      return; //EOF
     }
-    vecgrafo[iterator]->set_visitado(true);
-    cola_no_visitados.pop();
-    for (int i = 0; i < vecgrafo[iterator]->GetVector().size(); i++) {
-      if (!vecgrafo[iterator]->GetVector()[i].first->is_visitado()) {
+    vecgrafo[iterator]->set_visitado(true); //Se establece como visitado el nodo estudiado
+    cola_no_visitados.pop(); //Se extrae el nodo estudiado de la pila
+    for (int i = 0; i < vecgrafo[iterator]->GetVector().size(); i++) { //Bucle de estudio de la adyacencia
+      if (!vecgrafo[iterator]->GetVector()[i].first->is_visitado()) { //Si el nodo vecino no ha sido estudiado
         vecgrafo[iterator]->GetVector()[i].first->SetPadre(vecgrafo[iterator]);
         generados.emplace_back(vecgrafo[iterator]->GetVector()[i].first->GetId());
         //  vecgrafo[iterator]->GetVector()[i].first->set_visitado(true);
@@ -102,7 +105,7 @@ void Grafo::BusquedaDfs(const int id_origen, const int id_destino) {
       }
     }
   }
-  std::cerr << "No se ha encontrado solución" << std::endl;
+  std::cerr << "No se ha encontrado solución" << std::endl; //Si se finaliza el algoritmo entonces no se ha encontrado camino
 }
 
 void Grafo::Escritura(const std::vector<int> &visitados, const std::vector<int> &generados, std::stack<int> &camino, const float coste) {

@@ -25,8 +25,7 @@ int main(int argc, char *argv[]) {
     while (file >> lectura) {
       if (inicio == true) {
         grafismo.set_nodos(std::stoi(lectura));
-        for (unsigned i = 1; i <= std::stoi(lectura);
-             i++) { // Bucle de construcción del Grafo
+        for (unsigned i = 1; i <= std::stoi(lectura); i++) { // Bucle de construcción del Grafo
           grafismo.Insercion(new Nodo{i});
         }
         inicio = false;
@@ -60,6 +59,10 @@ int main(int argc, char *argv[]) {
     std::cout << "Nodo de destino: ";
     std::cin >> id_destino;
     std::cout << std::endl;
+    if (id_origen < 1 || id_destino > grafismo.GetNodos()) {
+      std::cerr << "Un nodo no entra dentro del rango" << std::endl;
+      return 0;
+    }
     grafismo.BusquedaBfs(id_origen, id_destino);
     break;
 
@@ -70,6 +73,10 @@ int main(int argc, char *argv[]) {
     std::cout << "Nodo de destino: ";
     std::cin >> id_destino;
     std::cout << std::endl;
+    if (id_origen < 1 || id_destino > grafismo.GetNodos()) {
+      std::cerr << "Un nodo no entra dentro del rango" << std::endl;
+      return 0;
+    }
     grafismo.BusquedaDfs(id_origen, id_destino);
     break;
   default:
