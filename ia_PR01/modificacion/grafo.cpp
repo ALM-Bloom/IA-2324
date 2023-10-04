@@ -18,6 +18,12 @@
 #include <stack>
 #include <utility>
 #include <vector>
+#include <random>
+#include <stdlib.h>
+#include <chrono>
+#include <time.h>
+
+static bool parar_random = false;
 
 void Grafo::SetArista(const int contnodo, const int nextnodo, const float arista) {
   vecgrafo[contnodo]->InsertarArista(vecgrafo[nextnodo], arista);
@@ -29,14 +35,29 @@ bool Grafo::Insercion(Nodo *novonodo) {
   return true;
 }
 
+void Grafo::RandomBFS(int id_origen, const int id_destino) {
+  static int cont_random = 0;
+  cont_random++;
+  srand (time(NULL));
+  int randNum = rand()%(vecgrafo[id_origen]->GetVector().size());
+  std::cout << "Nodo Random elegido: " << randNum << std::endl;
+  BusquedaBfs(vecgrafo[id_origen]->GetVector()[randNum].first->GetId(), id_destino);
+  if (cont_random == 10) {
+    std::cerr << "No existe camino" << std::endl;
+    return;
+  }
+  RandomBFS(id_origen, id_destino);
+}
 void Grafo::BusquedaBfs(const int id_origen, const int id_destino) {
-  //Declaración de los vectores/ generadores del resultado
-  std::vector<int> inspect, generados;
+  //Declaración de los vectores generadores del resultado
+  std::vector<int> generados;
+  static std::vector<int> inspect;
   std::stack<int> camino;
   //Declaración de la cola
   std::queue<int> cola_no_visitados;
   //Acumulador del coste.
   float coste_total = 0;
+  static int padre_original = id_origen;
   generados.emplace_back(id_origen);
   cola_no_visitados.push(id_origen);
   //Se establece al nodo origen el padre NULL
@@ -66,7 +87,7 @@ void Grafo::BusquedaBfs(const int id_origen, const int id_destino) {
     }
     cola_no_visitados.pop(); //Se extrae el nodo estudiado de la cola
   }
-  std::cerr << "No se ha encontrado solución" << std::endl;
+  std::cerr << "No encontrado en esta pasada" << std::endl;
   Escritura(inspect, generados, camino, coste_total); //Envío de los datos al método de escritura
 }
 

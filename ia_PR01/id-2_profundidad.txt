@@ -1,0 +1,4 @@
+Camino: No existe camino
+Generados: 1, 3, 4, 5, 6, 7, 11, 14, 10, 5, 2
+Visitados: 1, 4, 6, 14, 10, 11, 7, 5, 2, 5, 3
+Coste: 0
