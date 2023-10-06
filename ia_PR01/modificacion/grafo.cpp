@@ -38,7 +38,7 @@ bool Grafo::Insercion(Nodo *novonodo) {
 void Grafo::RandomBFS(int id_origen, const int id_destino) {
   static int cont_random = 0;
   cont_random++;
-  srand (time(NULL));
+  srand(time(NULL));
   int randNum = rand()%(vecgrafo[id_origen]->GetVector().size());
   std::cout << "Nodo Random elegido: " << randNum << std::endl;
   BusquedaBfs(vecgrafo[id_origen]->GetVector()[randNum].first->GetId(), id_destino);
