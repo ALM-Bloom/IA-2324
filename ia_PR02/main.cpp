@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
           laberinto.set_entrada(lec_fila, lec_col);
         }
         if (lectura[0] - '0' == 4) {
-          laberinto.set_entrada(lec_fila, lec_col);
+          laberinto.set_salida(lec_fila, lec_col);
         }
         lec_col++;
         if (lec_col > num_col) {
@@ -50,4 +50,5 @@ int main(int argc, char *argv[]) {
   }
   laberinto.set_matrix(camino);
   std::cout << laberinto.get_laberinto() << std::endl;
+  laberinto.encontrar_camino();
 }

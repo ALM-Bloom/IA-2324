@@ -17,8 +17,8 @@
 
 class Maze {
 public:
-  Maze(const matrix_t<int> &laberinto) : laberinto_{laberinto} {}
   Maze() = default;
+  Maze(const matrix_t<int> &laberinto) : laberinto_{laberinto} {}
   void set_matrix(const matrix_t<int> &matriz) { laberinto_ = matriz; }
   void set_entrada(const int i, const int j) {
     entrada_.first = i;
@@ -32,10 +32,12 @@ public:
   int función_manhattan();
   void encontrar_camino();
 
-private:
+  //Atributos en público para poder ser accedidos por los nodos
   int coste_acumulado_;  //g(n)
-  matrix_t<int> laberinto_; //Matriz con el laberinto
   std::pair<int, int> entrada_; // Coordenadas de la entrada (first = i_fila, second = j_col)
   std::pair<int, int> salida_;  // Coordenadas de la salida (first = i_fila, second = j_Col)
+
+private:
+  matrix_t<int> laberinto_; //Matriz con el laberinto
 };
 #endif
