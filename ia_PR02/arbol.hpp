@@ -18,6 +18,7 @@ class Arbol {
     Arbol() = default;
     void set_padre(Nodo* newnodo) { rey_ = newnodo; }
     Nodo* get_padre() { return rey_; }
+    
   private:
     Nodo* rey_;
 };

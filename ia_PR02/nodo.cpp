@@ -15,8 +15,8 @@
 #include <iostream>
 #include <utility>
 
-void Nodo::obtener_fn(const Maze& lab) { 
-  int h_n = 0;
+void Nodo::obtener_fn(const Maze& lab, bool is_diag) { 
+  int h_n = 0, g_n = 0;
   std::cout << "Coordenadas del nodo: " << coord_i_ << "," << coord_j_ << std::endl;
   std::cout << "Coordenadas destino: " << lab.salida_.first << "," << lab.salida_.second << std::endl;
   if (lab.salida_.first > coord_i_) {
@@ -38,7 +38,13 @@ void Nodo::obtener_fn(const Maze& lab) {
       h_n += 3;
   }
 }
+  if (is_diag == true) {
+    g_n = lab.coste_acumulado_ + 7;
+  } else {
+    g_n = lab.coste_acumulado_ + 5;
+  }
   std::cout << "Encontrada h(n) con valor: " << h_n << std::endl;
-  funcion_movimiento_ = h_n + lab.coste_acumulado_;
+  std::cout << "Encontrada g(n) con valor: " << g_n << std::endl;
+  funcion_movimiento_ = h_n + g_n;
   std::cout << "F(n) es " << funcion_movimiento_ << std::endl;
 }

@@ -26,13 +26,14 @@ public:
   Nodo() = default;
   void SetPadre(Nodo *nodoprev) { nodopadre_ = nodoprev; }
   Nodo *GetPadre() { return nodopadre_; }
-  void obtener_fn(const Maze& lab);
+  void obtener_fn(const Maze& lab, bool is_diag);
 
 private:
   int funcion_movimiento_; // f(n) y valor identificativo del nodo
   std::vector<Nodo *> hijos_; //Dentro del árbol, los hijos del nodo
   Nodo *nodopadre_; //Nodo Padre
   int coord_i_, coord_j_;
+  bool is_diag;
 };
 
 #endif

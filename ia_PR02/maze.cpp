@@ -29,11 +29,9 @@ void Maze::encontrar_camino() {
             if ((mov_horiz == 1 && mov_vert == 1) ||
                 (mov_horiz == 1 && mov_vert == -1) ||
                 (mov_horiz == -1 && mov_vert == 1) || (mov_horiz == -1 && mov_vert == -1)) { //Para averiguar si es diagonal
-                  coste_acumulado_ += 7;
-                  nodo_entrada.obtener_fn(*this);
+                  nodo_entrada.obtener_fn(*this, true);
             } else {
-                coste_acumulado_ += 5;
-                nodo_entrada.obtener_fn(*this);
+                nodo_entrada.obtener_fn(*this, false);
             }
           }
         }
