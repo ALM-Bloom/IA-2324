@@ -22,18 +22,19 @@
 class Maze;
 class Nodo {
 public:
-  Nodo(int coord_i, int coord_j) : coord_i_{coord_i}, coord_j_{coord_j}, funcion_movimiento_{0}, nodopadre_{NULL}, hijos_{NULL}  {}
+  Nodo(int coord_i, int coord_j, int is_diag) : coord_i_{coord_i}, coord_j_{coord_j}, is_diag_{is_diag}, funcion_movimiento_{0}, nodopadre_{NULL}, hijos_{NULL}  {}
   Nodo() = default;
   void SetPadre(Nodo *nodoprev) { nodopadre_ = nodoprev; }
   Nodo *GetPadre() { return nodopadre_; }
-  void obtener_fn(const Maze& lab, bool is_diag);
-
+  void obtener_fn(const Maze& lab);
+  bool operator>(const Nodo& other) const { return funcion_movimiento_ > other.funcion_movimiento_; }
+  int get_fn() const { return funcion_movimiento_; }
 private:
   int funcion_movimiento_; // f(n) y valor identificativo del nodo
   std::vector<Nodo *> hijos_; //Dentro del árbol, los hijos del nodo
   Nodo *nodopadre_; //Nodo Padre
   int coord_i_, coord_j_;
-  bool is_diag;
+  int is_diag_;
 };
 
 #endif

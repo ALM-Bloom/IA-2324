@@ -15,7 +15,7 @@
 #include <iostream>
 #include <utility>
 
-void Nodo::obtener_fn(const Maze& lab, bool is_diag) { 
+void Nodo::obtener_fn(const Maze& lab) { 
   int h_n = 0, g_n = 0;
   std::cout << "Coordenadas del nodo: " << coord_i_ << "," << coord_j_ << std::endl;
   std::cout << "Coordenadas destino: " << lab.salida_.first << "," << lab.salida_.second << std::endl;
@@ -38,7 +38,7 @@ void Nodo::obtener_fn(const Maze& lab, bool is_diag) {
       h_n += 3;
   }
 }
-  if (is_diag == true) {
+  if (is_diag_ == 1) {
     g_n = lab.coste_acumulado_ + 7;
   } else {
     g_n = lab.coste_acumulado_ + 5;
