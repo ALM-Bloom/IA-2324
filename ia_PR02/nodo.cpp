@@ -15,36 +15,35 @@
 #include <iostream>
 #include <utility>
 
-void Nodo::obtener_fn(const Maze& lab) { 
+void Nodo::obtener_fn(const Maze &lab) {
   int h_n = 0, g_n = 0;
   std::cout << "Coordenadas del nodo: " << coord_i_ << "," << coord_j_ << std::endl;
-  std::cout << "Coordenadas destino: " << lab.salida_.first << "," << lab.salida_.second << std::endl;
   if (lab.salida_.first > coord_i_) {
-  for (int i = coord_i_; i < lab.salida_.first; i++) {
+    for (int i = coord_i_; i < lab.salida_.first; i++) {
       h_n += 3;
-  }
+    }
   } else if (lab.salida_.first < coord_i_) {
-  for (int i = coord_i_; i < lab.salida_.first; i--) {
+    for (int i = coord_i_; i < lab.salida_.first; i--) {
       h_n += 3;
-  }
+    }
   }
   if (lab.salida_.second > coord_j_) {
-  for (int i = coord_j_; i < lab.salida_.second; i++) {
+    for (int i = coord_j_; i < lab.salida_.second; i++) {
       h_n += 3;
-  }
-  }
-  else if (lab.salida_.second < coord_j_) {
-  for (int i = coord_j_; i < lab.salida_.second; i--) {
+    }
+  } else if (lab.salida_.second < coord_j_) {
+    for (int i = coord_j_; i < lab.salida_.second; i--) {
       h_n += 3;
+    }
   }
-}
   if (is_diag_ == 1) {
     g_n = lab.coste_acumulado_ + 7;
-  } else {
+  } else if (is_diag_ == 0) {
     g_n = lab.coste_acumulado_ + 5;
   }
+  acumulado_propio_ = g_n;
+  funcion_movimiento_ = h_n + g_n;
   std::cout << "Encontrada h(n) con valor: " << h_n << std::endl;
   std::cout << "Encontrada g(n) con valor: " << g_n << std::endl;
-  funcion_movimiento_ = h_n + g_n;
   std::cout << "F(n) es " << funcion_movimiento_ << std::endl;
 }

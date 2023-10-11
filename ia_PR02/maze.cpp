@@ -17,13 +17,20 @@
 #include <queue>
 
 void Maze::encontrar_camino() {
-  int movimiento_i = entrada_.first, movimiento_j = entrada_.second; // Se parte de la posición de la entrada
+  int movimiento_i, movimiento_j; // Coordenadas desde las que se estudian los posibles movimientos
   Arbol arbol_informado;
-  std::priority_queue<Nodo, std::vector<Nodo>, std::greater<Nodo>> nodos_abiertos;
-  std::vector<Nodo> nodos_cerrados;
-  Nodo nodo_partida{movimiento_i, movimiento_j, 2};
-  nodo_partida.obtener_fn(*this);
-  while (laberinto_.at(movimiento_i, movimiento_j) != 4) { // Mientras no se encuentre la salida  
+  int dep = 0;
+  std::priority_queue<Nodo*, std::vector<Nodo*>, std::less<Nodo*>> nodos_abiertos;
+  std::vector<Nodo*> nodos_cerrados;
+  Nodo* nodo_partida = new Nodo{entrada_.first, entrada_.second, 2};
+  nodo_partida->obtener_fn(*this);
+  nodos_abiertos.push(nodo_partida);
+  while (!nodos_abiertos.empty()) { // Mientras la lista de nodos abiertas no esté vacía  
+    Nodo* iterator_nodo = nodos_abiertos.top();
+    nodos_abiertos.pop();
+    //Cambio de Marcha
+    movimiento_i = iterator_nodo->get_coord_i();
+    movimiento_j = iterator_nodo->get_coord_j();
     for (int mov_horiz = -1; mov_horiz <= 1; mov_horiz++) { // Bucle de movimiento (izquierda, derecha)
       for (int mov_vert = -1; mov_vert <= 1; mov_vert++) { // Bucle de movimiento (arriba, abajo)
         if (movimiento_i + mov_vert < laberinto_.get_m() && // Condicional para no salir de los lím. del laberinto
@@ -32,19 +39,51 @@ void Maze::encontrar_camino() {
             if ((mov_horiz == 1 && mov_vert == 1) ||
                 (mov_horiz == 1 && mov_vert == -1) ||
                 (mov_horiz == -1 && mov_vert == 1) || (mov_horiz == -1 && mov_vert == -1)) { //Para averiguar si es diagonal
-                  Nodo newnodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 1};
-                  newnodo.obtener_fn(*this);
-                  nodos_abiertos.push(newnodo);
+                  Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 1};
+                  newnodo->obtener_fn(*this);
+                  newnodo->SetPadre(iterator_nodo);
+                  if (!encontrar_nodo_abierto(nodos_abiertos, newnodo)) {
+                        nodos_abiertos.push(newnodo);
+                  }
             } else {
-                Nodo newnodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 0};
-                newnodo.obtener_fn(*this);
-                nodos_abiertos.push(newnodo);
+                Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 0};
+                newnodo->obtener_fn(*this);
+                newnodo->SetPadre(iterator_nodo);
+                if (!encontrar_nodo_abierto(nodos_abiertos, newnodo)) {
+                      nodos_abiertos.push(newnodo);
+              }
             }
           }
         }
       }
     }
-    std::cout << "El nodo con menor fn es de " << nodos_abiertos.top().get_fn() << std::endl;
-              throw;
+    if (dep == 5) {
+      throw;
+    }
+    std::cout << nodos_abiertos.top()->get_fn() << std::endl;
+    coste_acumulado_ += iterator_nodo->get_gn();
+    nodos_cerrados.emplace_back(iterator_nodo);
+    dep++;
   }
+}
+
+bool Maze::encontrar_nodo_abierto(std::priority_queue<Nodo*, std::vector<Nodo*>, std::less<Nodo*>>& nodos_abiertos_, Nodo* swap_node) {
+  std::vector<Nodo*> copy_vec;
+  bool repetido = false;
+  while (!nodos_abiertos_.empty()) {
+    if (nodos_abiertos_.top()->get_coord_i() == swap_node->get_coord_i() && nodos_abiertos_.top()->get_coord_j() == swap_node->get_coord_j()) {
+        repetido = true;
+      if (nodos_abiertos_.top()->get_gn() > swap_node->get_gn()) {
+        copy_vec.emplace_back(swap_node);
+        repetido = true;
+      }
+    } else {
+      copy_vec.emplace_back(nodos_abiertos_.top());
+    }
+    nodos_abiertos_.pop();
+  }
+  for (int i = 0; i < copy_vec.size(); i++) {
+    nodos_abiertos_.push(copy_vec[i]);
+  }
+  return repetido;
 }
