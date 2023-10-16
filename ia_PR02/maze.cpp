@@ -42,22 +42,24 @@ void Maze::encontrar_camino() {
                   Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 1};
                   newnodo->obtener_fn(*this);
                   newnodo->SetPadre(iterator_nodo);
-                  if (!encontrar_nodo_abierto(nodos_abiertos, newnodo)) {
-                        nodos_abiertos.push(newnodo);
+                  if (!encontrar_nodo_cerrado(nodos_cerrados, newnodo)) {
+                    nodos_abiertos.push(newnodo);
                   }
+                  encontrar_nodo_abierto(nodos_abiertos, newnodo);
             } else {
                 Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 0};
                 newnodo->obtener_fn(*this);
                 newnodo->SetPadre(iterator_nodo);
-                if (!encontrar_nodo_abierto(nodos_abiertos, newnodo)) {
-                      nodos_abiertos.push(newnodo);
-              }
+                  if (!encontrar_nodo_cerrado(nodos_cerrados, newnodo)) {
+                    nodos_abiertos.push(newnodo);
+                  }
+                  encontrar_nodo_abierto(nodos_abiertos, newnodo);
             }
           }
         }
       }
     }
-    if (dep == 5) {
+    if (dep == 15) {
       throw;
     }
     std::cout << nodos_abiertos.top()->get_fn() << std::endl;
@@ -72,8 +74,7 @@ bool Maze::encontrar_nodo_abierto(std::priority_queue<Nodo*, std::vector<Nodo*>,
   bool repetido = false;
   while (!nodos_abiertos_.empty()) {
     if (nodos_abiertos_.top()->get_coord_i() == swap_node->get_coord_i() && nodos_abiertos_.top()->get_coord_j() == swap_node->get_coord_j()) {
-        repetido = true;
-      if (nodos_abiertos_.top()->get_gn() > swap_node->get_gn()) {
+      if (nodos_abiertos_.top()->get_gn() < swap_node->get_gn()) {
         copy_vec.emplace_back(swap_node);
         repetido = true;
       }
@@ -87,3 +88,12 @@ bool Maze::encontrar_nodo_abierto(std::priority_queue<Nodo*, std::vector<Nodo*>,
   }
   return repetido;
 }
+
+  bool Maze::encontrar_nodo_cerrado(std::vector<Nodo*>& nodos_cerrados, Nodo* find_nodo) {
+    for (int i = 0; i < nodos_cerrados.size(); i++) {
+      if (nodos_cerrados[i]->get_coord_i() == find_nodo->get_coord_i() && nodos_cerrados[i]->get_coord_j() == find_nodo->get_coord_j()) {
+        return true;
+      }
+    }
+    return false;
+  }
