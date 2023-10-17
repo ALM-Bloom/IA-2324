@@ -72,7 +72,13 @@ int main(int argc, char *argv[]) {
     camino.at(lec_entrada, lec_salida) = 4;
   }
   laberinto.set_matrix(camino);
-  std::cout << laberinto.get_laberinto() << std::endl;
-  laberinto.encontrar_camino();
+  std::cout << laberinto.get_laberinto();
+  std::cout << "Desea usar la heurística de Euclides (1) o heurística de Manhattan (2): ";
+  std::cin >> opcion;
+  if (opcion == 1) {
+    laberinto.encontrar_camino_euclides();
+  } else {
+    laberinto.encontrar_camino();
+  }
   std::cout << laberinto.get_laberinto() << std::endl;
 }

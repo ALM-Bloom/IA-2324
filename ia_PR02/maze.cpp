@@ -96,7 +96,7 @@ void Maze::vuelta_atrás(const std::vector<Nodo*> nodos_cerrados) {
     while (nodo_actual != nullptr) {
         int i = nodo_actual->get_coord_i();
         int j = nodo_actual->get_coord_j();
-        laberinto_.at(i, j) = 8;
+        laberinto_.at(i, j) = 5;
         // Si el padre es nullptr, hemos llegado al nodo de entrada
         if (nodo_actual->get_padre() == nullptr) {
             std::cout << "Llegamos al nodo de entrada." << std::endl;
@@ -170,3 +170,64 @@ void Maze::encontrar_nodo_abierto(std::priority_queue<Nodo*, std::vector<Nodo*>,
     }
     return false;
   }
+
+void Maze::encontrar_camino_euclides() {
+  int movimiento_i, movimiento_j, it = 1; // Coordenadas desde las que se estudian los posibles movimientos
+  Arbol arbol_informado;
+  std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos;
+  std::vector<Nodo*> nodos_cerrados;
+  Nodo* nodo_partida = new Nodo{entrada_.first, entrada_.second, 2};
+  nodo_partida->obtener_fn_alternativo(*this, nodo_partida->get_gn());
+  nodos_abiertos.push(nodo_partida);
+  while (!nodos_abiertos.empty()) { // Mientras la lista de nodos abiertas no esté vacía  
+    Nodo* iterator_nodo = nodos_abiertos.top();
+    // std::cout << "Nodo siendo analizado: " << iterator_nodo->get_coord_i() << "," << iterator_nodo->get_coord_j() << std::endl;
+    //Cambio de Marcha
+    movimiento_i = iterator_nodo->get_coord_i();
+    movimiento_j = iterator_nodo->get_coord_j();
+    for (int mov_horiz = -1; mov_horiz <= 1; mov_horiz++) { // Bucle de movimiento (izquierda, derecha)
+      for (int mov_vert = -1; mov_vert <= 1; mov_vert++) { // Bucle de movimiento (arriba, abajo)
+        if (movimiento_i + mov_vert <= laberinto_.get_m() && // Condicional para no salir de los lím. del laberinto
+            movimiento_i + mov_vert > 0 && movimiento_j + mov_horiz <= laberinto_.get_n() && movimiento_j + mov_horiz > 0) {
+          if (laberinto_.at(movimiento_i + mov_vert, movimiento_j + mov_horiz) == 0 || 
+          laberinto_.at(movimiento_i + mov_vert, movimiento_j + mov_horiz) == 4) { // Si se encuentra camino
+            if ((mov_horiz == 1 && mov_vert == 1) ||
+                (mov_horiz == 1 && mov_vert == -1) ||
+                (mov_horiz == -1 && mov_vert == 1) || (mov_horiz == -1 && mov_vert == -1)) { //Para averiguar si es diagonal
+                  Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 1};
+                  newnodo->obtener_fn_alternativo(*this, iterator_nodo->get_gn());
+                  newnodo->SetPadre(iterator_nodo);
+                  if (!encontrar_nodo_cerrado(nodos_cerrados, newnodo) && !abiertos_repetido(nodos_abiertos, newnodo)) {
+                    nodos_abiertos.push(newnodo);
+                  }
+                if (abiertos_repetido(nodos_abiertos, newnodo)) {
+                encontrar_nodo_abierto(nodos_abiertos, newnodo);
+                } 
+            } else {
+                Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 0};
+                newnodo->obtener_fn_alternativo(*this, iterator_nodo->get_gn());
+                newnodo->SetPadre(iterator_nodo);
+                  if (!encontrar_nodo_cerrado(nodos_cerrados, newnodo) && !abiertos_repetido(nodos_abiertos, newnodo)) {
+                    nodos_abiertos.push(newnodo);
+                  }
+                if (abiertos_repetido(nodos_abiertos, newnodo)) {
+                encontrar_nodo_abierto(nodos_abiertos, newnodo);
+                }
+            }
+          }
+        }
+      }
+    }
+    nodos_abiertos.pop();
+//---------Herramientas de Depuración------------------------------------
+    // std::cout << "IT " << it << std::endl;
+    //  imprimir_nodos_abiertos(nodos_abiertos);
+    //  std::cout << std::endl;
+    // std::cout << nodos_abiertos.top()->get_fn() << std::endl;
+    // std::cout << nodos_abiertos.size() << std::endl;
+    // it++;
+//------------------------------------------------------------------------
+    nodos_cerrados.emplace_back(iterator_nodo);
+  }
+  vuelta_atrás(nodos_cerrados);
+}

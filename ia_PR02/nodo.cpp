@@ -14,6 +14,7 @@
 #include "maze.hpp"
 #include <iostream>
 #include <utility>
+#include <cmath>
 
 void Nodo::obtener_fn(const Maze &lab, const int acumulado_previo) {
   int h_n = 0, g_n = 0;
@@ -50,6 +51,12 @@ void Nodo::obtener_fn(const Maze &lab, const int acumulado_previo) {
 
 void Nodo::obtener_fn_alternativo(const Maze& lab, const int acumulado_previo) {
   int h_n = 0, g_n = 0;
+  int i1 = coord_i_;
+  int j1 = coord_j_;
+  int i2 = lab.salida_.first;
+  int j2 = lab.salida_.second;
+  // Cálculo de la distancia euclidiana entre el nodo actual y el nodo objetivo
+  h_n = std::sqrt((i2 - i1) * (i2 - i1) + (j2 - j1) * (j2 - j1));
   if (is_diag_ == 1) {
     g_n = acumulado_previo + 7;
   } else if (is_diag_ == 0) {
