@@ -47,3 +47,17 @@ void Nodo::obtener_fn(const Maze &lab, const int acumulado_previo) {
   // std::cout << "Encontrada g(n) con valor: " << g_n << std::endl;
   // std::cout << "F(n) es " << funcion_movimiento_ << std::endl;
 }
+
+void Nodo::obtener_fn_alternativo(const Maze& lab, const int acumulado_previo) {
+  int h_n = 0, g_n = 0;
+  if (is_diag_ == 1) {
+    g_n = acumulado_previo + 7;
+  } else if (is_diag_ == 0) {
+    g_n = acumulado_previo + 5;
+  }
+  acumulado_propio_ = g_n;
+  funcion_movimiento_ = h_n + g_n;
+  // std::cout << "Encontrada h(n) con valor: " << h_n << std::endl;
+  // std::cout << "Encontrada g(n) con valor: " << g_n << std::endl;
+  // std::cout << "F(n) es " << funcion_movimiento_ << std::endl;
+}

@@ -17,7 +17,7 @@
 #include <queue>
 
 void Maze::encontrar_camino() {
-  int movimiento_i, movimiento_j; // Coordenadas desde las que se estudian los posibles movimientos
+  int movimiento_i, movimiento_j, it = 1; // Coordenadas desde las que se estudian los posibles movimientos
   Arbol arbol_informado;
   std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos;
   std::vector<Nodo*> nodos_cerrados;
@@ -26,7 +26,7 @@ void Maze::encontrar_camino() {
   nodos_abiertos.push(nodo_partida);
   while (!nodos_abiertos.empty()) { // Mientras la lista de nodos abiertas no esté vacía  
     Nodo* iterator_nodo = nodos_abiertos.top();
-    std::cout << "Nodo siendo analizado: " << iterator_nodo->get_coord_i() << "," << iterator_nodo->get_coord_j() << std::endl;
+    // std::cout << "Nodo siendo analizado: " << iterator_nodo->get_coord_i() << "," << iterator_nodo->get_coord_j() << std::endl;
     //Cambio de Marcha
     movimiento_i = iterator_nodo->get_coord_i();
     movimiento_j = iterator_nodo->get_coord_j();
@@ -64,9 +64,14 @@ void Maze::encontrar_camino() {
       }
     }
     nodos_abiertos.pop();
-    // imprimir_nodos_abiertos(nodos_abiertos);
+//---------Herramientas de Depuración------------------------------------
+    // std::cout << "IT " << it << std::endl;
+    //  imprimir_nodos_abiertos(nodos_abiertos);
+    //  std::cout << std::endl;
     // std::cout << nodos_abiertos.top()->get_fn() << std::endl;
     // std::cout << nodos_abiertos.size() << std::endl;
+    // it++;
+//------------------------------------------------------------------------
     nodos_cerrados.emplace_back(iterator_nodo);
   }
   vuelta_atrás(nodos_cerrados);
@@ -74,6 +79,7 @@ void Maze::encontrar_camino() {
 
 void Maze::vuelta_atrás(const std::vector<Nodo*> nodos_cerrados) {
   Nodo* nodo_salida = nullptr;
+  int coste_camino = 0;
   for (int i = 0; i < nodos_cerrados.size(); i++) {
     if (nodos_cerrados[i]->get_coord_i() == salida_.first && nodos_cerrados[i]->get_coord_j() == salida_.second) {
       nodo_salida = nodos_cerrados[i];
@@ -86,6 +92,7 @@ void Maze::vuelta_atrás(const std::vector<Nodo*> nodos_cerrados) {
     }
     // Recorre los padres desde el nodo de salida hasta el nodo de entrada
     Nodo* nodo_actual = nodo_salida;
+    std::cout << "Coste camino = " << nodo_actual->get_gn() << std::endl;
     while (nodo_actual != nullptr) {
         int i = nodo_actual->get_coord_i();
         int j = nodo_actual->get_coord_j();
@@ -95,7 +102,7 @@ void Maze::vuelta_atrás(const std::vector<Nodo*> nodos_cerrados) {
             std::cout << "Llegamos al nodo de entrada." << std::endl;
             break;
         }
-
+        coste_camino += nodo_actual->get_fn();
         // Avanza al nodo padre
         nodo_actual = nodo_actual->get_padre();
     }
@@ -105,7 +112,6 @@ void Maze::vuelta_atrás(const std::vector<Nodo*> nodos_cerrados) {
 void Maze::imprimir_nodos_abiertos(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos_) {
     // Creamos una copia temporal de la cola de prioridad para no modificar la original
     std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> temp_queue = nodos_abiertos_;
-
     while (!temp_queue.empty()) {
         Nodo* top_node = temp_queue.top();
         temp_queue.pop();
@@ -120,7 +126,6 @@ bool Maze::abiertos_repetido(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo
     while (!temp_queue.empty()) {
         Nodo* top_node = temp_queue.top();
         temp_queue.pop();
-
         // Si encontramos un nodo con las mismas coordenadas
         if (top_node->get_coord_i() == busq_nodo->get_coord_i() && top_node->get_coord_j() == busq_nodo->get_coord_j()) {
             // El nodo busq_nodo existe en la cola

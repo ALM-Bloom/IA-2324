@@ -31,7 +31,6 @@ public:
     salida_.second = j;
   }
   matrix_t<int>& get_laberinto() { return laberinto_; }
-  int función_manhattan();
   void encontrar_camino();
   void vuelta_atrás(const std::vector<Nodo*> nodos_cerrados);
   void encontrar_nodo_abierto(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo>& nodos_abiertos_, Nodo* swapnode);

@@ -28,16 +28,6 @@ int main(int argc, char *argv[]) {
   std::cin >> opcion;
   if (opcion == 1) {
     indicar_teclado = true;
-    std::cout << "Introduzca las coordenadas de la entrada" << std::endl;
-    std::cin >> lec_entrada;
-    std::cin >> lec_salida;
-    laberinto.set_entrada(lec_entrada, lec_salida);
-    camino.at(lec_entrada, lec_salida) = 3;
-    std::cout << "Introduzca las coordenadas de la salida" << std::endl;
-    std::cin >> lec_entrada;
-    std::cin >> lec_salida;
-    laberinto.set_salida(lec_entrada, lec_salida);
-    camino.at(lec_entrada, lec_salida) = 4;
   }
   if (file.is_open()) {
     while (file >> lectura) {
@@ -51,11 +41,15 @@ int main(int argc, char *argv[]) {
       if (cont_line > 1) {
         if (lectura[0] - '0' == 3 && indicar_teclado == false) {
           laberinto.set_entrada(lec_fila, lec_col);
+          camino.at(lec_fila, lec_col) = lectura[0] - '0';
         }
         if (lectura[0] - '0' == 4 && indicar_teclado == false) {
           laberinto.set_salida(lec_fila, lec_col);
+          camino.at(lec_fila, lec_col) = lectura[0] - '0';
         }
+        if (lectura[0] - '0' != 3 && lectura[0] - '0' != 4) {
         camino.at(lec_fila, lec_col) = lectura[0] - '0';
+        }
         lec_col++;
         if (lec_col > num_col) {
           lec_col = 1;
@@ -64,6 +58,18 @@ int main(int argc, char *argv[]) {
       }
       cont_line++;
     }
+  }
+  if (opcion == 1) {
+    std::cout << "Introduzca las coordenadas de la entrada" << std::endl;
+    std::cin >> lec_entrada;
+    std::cin >> lec_salida;
+    laberinto.set_entrada(lec_entrada, lec_salida);
+    camino.at(lec_entrada, lec_salida) = 3;
+    std::cout << "Introduzca las coordenadas de la salida" << std::endl;
+    std::cin >> lec_entrada;
+    std::cin >> lec_salida;
+    laberinto.set_salida(lec_entrada, lec_salida);
+    camino.at(lec_entrada, lec_salida) = 4;
   }
   laberinto.set_matrix(camino);
   std::cout << laberinto.get_laberinto() << std::endl;

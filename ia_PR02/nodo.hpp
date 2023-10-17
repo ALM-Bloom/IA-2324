@@ -27,6 +27,7 @@ public:
   void SetPadre(Nodo *nodoprev) { nodopadre_ = nodoprev; }
   Nodo *get_padre() { return nodopadre_; }
   void obtener_fn(const Maze& lab, const int acumulado_previo);
+  void obtener_fn_alternativo(const Maze& lab, const int acumulado_previo);
   int get_fn() const { return funcion_movimiento_; }
   int get_gn() { return acumulado_propio_; }
   int get_coord_i() { return coord_i_;}
