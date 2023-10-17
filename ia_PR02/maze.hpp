@@ -33,14 +33,18 @@ public:
   matrix_t<int>& get_laberinto() { return laberinto_; }
   int función_manhattan();
   void encontrar_camino();
-  bool encontrar_nodo_abierto(std::priority_queue<Nodo*, std::vector<Nodo*>, std::less<Nodo*>>& nodos_abiertos_, Nodo* swapnode);
+  void vuelta_atrás(const std::vector<Nodo*> nodos_cerrados);
+  void encontrar_nodo_abierto(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo>& nodos_abiertos_, Nodo* swapnode);
   bool encontrar_nodo_cerrado(std::vector<Nodo*>& nodos_cerrados, Nodo* find_nodo);
+  bool abiertos_repetido(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo>& nodos_abiertos_, Nodo* busq_nodo);
+  void imprimir_nodos_abiertos(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos_);
   //Atributos en público para poder ser accedidos por los nodos
-  int coste_acumulado_ = 0;  //g(n)
   std::pair<int, int> entrada_; // Coordenadas de la entrada (first = i_fila, second = j_col)
   std::pair<int, int> salida_;  // Coordenadas de la salida (first = i_fila, second = j_Col)
 
 private:
   matrix_t<int> laberinto_; //Matriz con el laberinto
 };
+
+
 #endif
