@@ -1,0 +1,15 @@
+Nodos visitados:
+Coordenadas (2, 2)
+Coordenadas (3, 3)
+Coordenadas (4, 4)
+Nodos generados:
+Coordenadas (5, 3)
+Coordenadas (4, 5)
+Coordenadas (4, 2)
+Coordenadas (4, 3)
+Coordenadas (3, 2)
+Coordenadas (3, 3)
+Camino:
+Coordenadas (4, 4)
+Coordenadas (3, 3)
+Coordenadas (2, 2)

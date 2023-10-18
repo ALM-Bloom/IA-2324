@@ -15,13 +15,17 @@
 #include "matrix_t.hpp"
 #include "nodo.hpp"
 #include <queue>
+#include <fstream>
+#include <set>
 
 /// @brief Método que implementa el algoritmo A*
 /// @param euclides Booleano que identifica si se ha seleccionado la heurística alternativa (true)
 void Maze::encontrar_camino(const bool& euclides) {
   int movimiento_i, movimiento_j, it = 1; // Coordenadas desde las que se estudian los posibles movimientos
   Arbol arbol_informado;
+  int g_n_salida;
   std::vector<Nodo*> visitados;
+  std::set<Nodo*, Nodo> nodos_generados;
   std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos;
   std::vector<Nodo*> nodos_cerrados;
   Nodo* nodo_partida = new Nodo{entrada_.first, entrada_.second, 2};
@@ -31,8 +35,11 @@ void Maze::encontrar_camino(const bool& euclides) {
     nodo_partida->obtener_fn(*this, nodo_partida->get_gn());
   }
   nodos_abiertos.push(nodo_partida);
-  while (!nodos_abiertos.empty()) { // Mientras la lista de nodos abiertas no esté vacía  
+  while (!nodos_abiertos.empty() && nodos_abiertos.top()->get_fn() < g_n_salida) { // Mientras la lista de nodos abiertas no esté vacía  
     Nodo* iterator_nodo = nodos_abiertos.top();
+    if (iterator_nodo->get_coord_i() == salida_.first && iterator_nodo->get_coord_j() == salida_.second) {
+        g_n_salida = iterator_nodo->get_gn();
+    }
     visitados.emplace_back(iterator_nodo); //Para mostrar los nodos visitados en la tabla de resultados
     // std::cout << "Nodo siendo analizado: " << iterator_nodo->get_coord_i() << "," << iterator_nodo->get_coord_j() << std::endl;
     //Cambio de Marcha
@@ -56,6 +63,7 @@ void Maze::encontrar_camino(const bool& euclides) {
                   newnodo->SetPadre(iterator_nodo);
                   if (!encontrar_nodo_cerrado(nodos_cerrados, newnodo) && !abiertos_repetido(nodos_abiertos, newnodo)) {
                     nodos_abiertos.push(newnodo);
+                    nodos_generados.emplace(newnodo);
                   }
                 if (abiertos_repetido(nodos_abiertos, newnodo)) {
                 encontrar_nodo_abierto(nodos_abiertos, newnodo);
@@ -70,6 +78,7 @@ void Maze::encontrar_camino(const bool& euclides) {
                 newnodo->SetPadre(iterator_nodo);
                   if (!encontrar_nodo_cerrado(nodos_cerrados, newnodo) && !abiertos_repetido(nodos_abiertos, newnodo)) {
                     nodos_abiertos.push(newnodo);
+                    nodos_generados.emplace(newnodo);
                   }
                 if (abiertos_repetido(nodos_abiertos, newnodo)) {
                 encontrar_nodo_abierto(nodos_abiertos, newnodo);
@@ -91,6 +100,7 @@ void Maze::encontrar_camino(const bool& euclides) {
     nodos_cerrados.emplace_back(iterator_nodo);
   }
   vuelta_atrás(nodos_cerrados);
+  escritura_a_fichero(visitados, nodos_generados);
 }
 
 /// @brief Método que busca el camino generado estudiando los padres desde la salida hasta la entrada
@@ -115,6 +125,7 @@ void Maze::vuelta_atrás(const std::vector<Nodo*> nodos_cerrados) {
         int i = nodo_actual->get_coord_i();
         int j = nodo_actual->get_coord_j();
         laberinto_.at(i, j) = 5;
+        camino.push(nodo_actual);
         // Si el padre es nullptr, hemos llegado al nodo de entrada
         if (nodo_actual->get_padre() == nullptr) {
             std::cout << "Llegamos al nodo de entrada." << std::endl;
@@ -131,7 +142,6 @@ void Maze::vuelta_atrás(const std::vector<Nodo*> nodos_cerrados) {
 /// @brief Método para imprimir por pantalla la lista de nodos abiertos, usado en la depuración del programa
 /// @param nodos_abiertos_ La cola de prioridad de nodos abiertos 
 void Maze::imprimir_nodos_abiertos(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos_) {
-    // Creamos una copia temporal de la cola de prioridad para no modificar la original
     std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> temp_queue = nodos_abiertos_;
     while (!temp_queue.empty()) {
         Nodo* top_node = temp_queue.top();
@@ -146,7 +156,6 @@ void Maze::imprimir_nodos_abiertos(std::priority_queue<Nodo*, std::vector<Nodo*>
 /// @param busq_nodo El nodo que se pretende encontrar en la lista significando que ya ha sido generado anteriormente   
 /// @return booleano que identifica mediante true si el nodo se encuentra en la lista o false en otro caso
 bool Maze::abiertos_repetido(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo>& nodos_abiertos_, Nodo* busq_nodo) {
-    // Creamos una copia temporal de la cola de prioridad para buscar el nodo
     std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> temp_queue = nodos_abiertos_;
     while (!temp_queue.empty()) {
         Nodo* top_node = temp_queue.top();
@@ -185,8 +194,6 @@ void Maze::encontrar_nodo_abierto(std::priority_queue<Nodo*, std::vector<Nodo*>,
             temp_queue.push(top_node);
         }
     }
-
-    // Restauramos la cola de prioridad original con los nodos actualizados
     nodos_abiertos_ = temp_queue;
 }
 
@@ -202,3 +209,32 @@ void Maze::encontrar_nodo_abierto(std::priority_queue<Nodo*, std::vector<Nodo*>,
     }
     return false;
   }
+
+void Maze::escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, std::set<Nodo*, Nodo> nodos_generados) {
+    const std::string nombre_archivo = "resultado.txt";
+    std::ofstream archivo_salida(nombre_archivo);
+    if (archivo_salida.is_open()) {
+      //Escribe los nodos visitados en el archivo.
+        archivo_salida << "Nodos visitados:" << std::endl;
+        for (Nodo* nodo : nodos_visitados) {
+            archivo_salida << "Coordenadas (" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << std::endl;
+        }
+        // Escribe los nodos generados en el archivo
+        archivo_salida << "Nodos generados:" << std::endl;
+        for (Nodo* nodo : nodos_generados) {
+            archivo_salida << "Coordenadas (" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << std::endl;
+        }
+        //Escribe el camino en el archivo.
+        archivo_salida << "Camino:" << std::endl;
+        std::queue<Nodo*> copia_camino = camino; // Copia para no modificar el original
+        while (!copia_camino.empty()) {
+            Nodo* nodo = copia_camino.front();
+            archivo_salida << "Coordenadas (" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << std::endl;
+            copia_camino.pop();
+        }
+        archivo_salida.close();
+        std::cout << "Datos escritos en " << nombre_archivo << std::endl;
+    } else {
+        std::cerr << "No se pudo abrir el archivo para escritura." << std::endl;
+    }
+}

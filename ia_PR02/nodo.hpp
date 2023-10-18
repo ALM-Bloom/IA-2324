@@ -34,6 +34,7 @@ public:
   int get_coord_i() { return coord_i_;}
   int get_coord_j() { return coord_j_;}
   bool operator()(Nodo* other, Nodo* other_node)  { return other->get_fn() > other_node->get_fn(); }
+  bool operator()(Nodo* nodo1, Nodo* nodo2) const {  return (nodo1->get_coord_i() == nodo2->get_coord_i()) && (nodo1->get_coord_j() == nodo2->get_coord_j()); }
 
 private:
   int funcion_movimiento_; // f(n) y valor identificativo del nodo
