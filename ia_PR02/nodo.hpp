@@ -20,6 +20,7 @@
 #include "maze.hpp"
 
 class Maze;
+/// @brief Clase Nodo que refiere a cada casilla dentro del laberinto y que calcula su f(n)
 class Nodo {
 public:
   Nodo(int coord_i, int coord_j, int is_diag) : coord_i_{coord_i}, coord_j_{coord_j}, is_diag_{is_diag}, funcion_movimiento_{0}, acumulado_propio_{0}, nodopadre_{NULL}, hijos_{NULL}  {}

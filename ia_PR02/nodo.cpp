@@ -16,6 +16,9 @@
 #include <utility>
 #include <cmath>
 
+/// @brief Método que calcula el h(n) {Manhattan} y g(n) de un nodo y obtiene el f(n) asociándolo al atributo del nodo
+/// @param lab El propio laberinto que contiene las coordenadas de la entrada y salida cruciales para el cálculo de h(n)
+/// @param acumulado_previo El g(n) del nodo padre
 void Nodo::obtener_fn(const Maze &lab, const int acumulado_previo) {
   int h_n = 0, g_n = 0;
   // std::cout << "Coordenadas del nodo: " << coord_i_ << "," << coord_j_ << std::endl;
@@ -44,11 +47,11 @@ void Nodo::obtener_fn(const Maze &lab, const int acumulado_previo) {
   }
   acumulado_propio_ = g_n;
   funcion_movimiento_ = h_n + g_n;
-  // std::cout << "Encontrada h(n) con valor: " << h_n << std::endl;
-  // std::cout << "Encontrada g(n) con valor: " << g_n << std::endl;
-  // std::cout << "F(n) es " << funcion_movimiento_ << std::endl;
 }
 
+/// @brief Método que obtiene el f(n) mediante la suma de g(n) y h(n) {Euclides} mediante la relación triangular
+/// @param lab El propio laberinto del que se sacan las coordenadas del destino (la salida)
+/// @param acumulado_previo El g(n) del nodo padre
 void Nodo::obtener_fn_alternativo(const Maze& lab, const int acumulado_previo) {
   int h_n = 0, g_n = 0;
   int i1 = coord_i_;
@@ -64,7 +67,4 @@ void Nodo::obtener_fn_alternativo(const Maze& lab, const int acumulado_previo) {
   }
   acumulado_propio_ = g_n;
   funcion_movimiento_ = h_n + g_n;
-  // std::cout << "Encontrada h(n) con valor: " << h_n << std::endl;
-  // std::cout << "Encontrada g(n) con valor: " << g_n << std::endl;
-  // std::cout << "F(n) es " << funcion_movimiento_ << std::endl;
 }

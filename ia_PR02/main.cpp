@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
   matrix_t<int> camino;
   int cont_line = 0, num_fil, num_col, lec_fila = 1, lec_col = 1, opcion;
   int lec_entrada, lec_salida;
-  bool indicar_teclado = false;
+  bool indicar_teclado = false, euclides = false;
   std::ifstream file(infile);
   std::string lectura;
   Maze laberinto;
@@ -76,9 +76,10 @@ int main(int argc, char *argv[]) {
   std::cout << "Desea usar la heurística de Euclides (1) o heurística de Manhattan (2): ";
   std::cin >> opcion;
   if (opcion == 1) {
-    laberinto.encontrar_camino_euclides();
+    euclides = true;
+    laberinto.encontrar_camino(euclides);
   } else {
-    laberinto.encontrar_camino();
+    laberinto.encontrar_camino(euclides);
   }
   std::cout << laberinto.get_laberinto() << std::endl;
 }
