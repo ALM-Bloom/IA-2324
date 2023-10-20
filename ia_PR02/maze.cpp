@@ -11,7 +11,6 @@
  */
 
 #include "maze.hpp"
-#include "arbol.hpp"
 #include "matrix_t.hpp"
 #include "nodo.hpp"
 #include <queue>
@@ -22,8 +21,7 @@
 /// @param euclides Booleano que identifica si se ha seleccionado la heurística alternativa (true)
 void Maze::encontrar_camino(const bool& euclides) {
   int movimiento_i, movimiento_j, it = 1; // Coordenadas desde las que se estudian los posibles movimientos
-  Arbol arbol_informado;
-  int g_n_salida;
+  int g_n_salida = 99999;
   std::vector<Nodo*> visitados;
   std::set<Nodo*, Nodo> nodos_generados;
   std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos;
@@ -35,7 +33,7 @@ void Maze::encontrar_camino(const bool& euclides) {
     nodo_partida->obtener_fn(*this, nodo_partida->get_gn());
   }
   nodos_abiertos.push(nodo_partida);
-  while (!nodos_abiertos.empty() && nodos_abiertos.top()->get_fn() < g_n_salida) { // Mientras la lista de nodos abiertas no esté vacía  
+  while (!nodos_abiertos.empty() && nodos_abiertos.top()->get_gn() < g_n_salida) { // Mientras la lista de nodos abiertas no esté vacía  
     Nodo* iterator_nodo = nodos_abiertos.top();
     if (iterator_nodo->get_coord_i() == salida_.first && iterator_nodo->get_coord_j() == salida_.second) {
         g_n_salida = iterator_nodo->get_gn();
