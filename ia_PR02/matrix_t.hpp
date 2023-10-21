@@ -74,9 +74,6 @@ template <class T> vector_t<T> matrix_t<T>::get_col(const int j) const {
 }
 
 template <class T> T &matrix_t<T>::at(const int i, const int j) {
-  // std::cout << "Estableciendo la fil: " << i << std::endl;
-  // assert(i > 0 && i < get_m());
-  // assert(j > 0 && j < get_n());
   return v_[pos(i, j)];
 }
 

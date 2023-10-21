@@ -14,6 +14,7 @@
 #include "maze.hpp"
 #include <fstream>
 #include <iostream>
+#include <utility>
 
 int main(int argc, char *argv[]) {
   std::string infile = argv[1];
@@ -48,7 +49,13 @@ int main(int argc, char *argv[]) {
           camino.at(lec_fila, lec_col) = lectura[0] - '0';
         }
         if (lectura[0] - '0' != 3 && lectura[0] - '0' != 4) {
-        camino.at(lec_fila, lec_col) = lectura[0] - '0';
+          camino.at(lec_fila, lec_col) = lectura[0] - '0';
+        }
+        if (lectura[0] - '0' == 3 && indicar_teclado == true) {
+          camino.at(lec_fila, lec_col) = 1;
+        } 
+        if (lectura[0] - '0' == 4 && indicar_teclado == true) {
+          camino.at(lec_fila, lec_col) = 1;
         }
         lec_col++;
         if (lec_col > num_col) {

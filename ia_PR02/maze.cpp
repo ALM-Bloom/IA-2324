@@ -87,14 +87,6 @@ void Maze::encontrar_camino(const bool& euclides) {
       }
     }
     nodos_abiertos.pop();
-//---------Herramientas de Depuración------------------------------------
-    // std::cout << "IT " << it << std::endl;
-    //  imprimir_nodos_abiertos(nodos_abiertos);
-    //  std::cout << std::endl;
-    // std::cout << nodos_abiertos.top()->get_fn() << std::endl;
-    // std::cout << nodos_abiertos.size() << std::endl;
-    // it++;
-//------------------------------------------------------------------------
     nodos_cerrados.emplace_back(iterator_nodo);
   }
   vuelta_atrás(nodos_cerrados);
