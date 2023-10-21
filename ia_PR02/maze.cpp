@@ -87,7 +87,6 @@ void Maze::encontrar_camino(const bool& euclides) {
     nodos_abiertos.pop();
     nodos_cerrados.emplace_back(iterator_nodo);
   }
-  nodos_cerrados.emplace_back(nodos_abiertos.top());
   vuelta_atras(nodos_cerrados);
   escritura_a_fichero(nodos_cerrados, nodos_generados);
 }
@@ -213,8 +212,9 @@ void Maze::escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, const s
         archivo_salida << "Nº de nodos generados: " << nodos_generados.size() << std::endl;
         archivo_salida << "Nodos generados:" << std::endl;
         for (Nodo* nodo : nodos_generados) {
-            archivo_salida << "Coordenadas (" << nodo->get_coord_i() - 1 << ", " << nodo->get_coord_j() - 1 << ")" << std::endl;
+            archivo_salida << "(" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << ", ";
         }
+        archivo_salida << std::endl;
         //Escribe el camino en el archivo.
         archivo_salida << "Camino:" << std::endl;
         if (camino.empty()) {
@@ -223,7 +223,7 @@ void Maze::escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, const s
         std::queue<Nodo*> copia_camino = camino; // Copia para no modificar el original
         while (!copia_camino.empty()) {
             Nodo* nodo = copia_camino.front();
-            archivo_salida << "Coordenadas (" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << std::endl;
+            archivo_salida << "(" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << " , ";
             copia_camino.pop();
         }
         archivo_salida.close();
