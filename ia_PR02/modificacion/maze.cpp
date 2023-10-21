@@ -214,7 +214,7 @@ void Maze::escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, const s
         }
         archivo_salida << std::endl;
         //Escribe el camino en el archivo.
-        archivo_salida << "Coste Camino = " << coste_total << std::endl;  
+        archivo_salida << "Coste Camino = " << coste_total << std::endl;
         archivo_salida << "Camino:" << std::endl;
         if (camino.empty()) {
           archivo_salida << "No existe camino" << std::endl;
