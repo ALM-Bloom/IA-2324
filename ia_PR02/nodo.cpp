@@ -21,7 +21,6 @@
 /// @param acumulado_previo El g(n) del nodo padre
 void Nodo::obtener_fn(const Maze &lab, const int acumulado_previo) {
   int h_n = 0, g_n = 0;
-  // std::cout << "Coordenadas del nodo: " << coord_i_ << "," << coord_j_ << std::endl;
   if (lab.salida_.first > coord_i_) {
     for (int i = coord_i_; i < lab.salida_.first; i++) {
       h_n += 3;

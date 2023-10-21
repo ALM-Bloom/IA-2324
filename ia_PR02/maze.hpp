@@ -18,8 +18,8 @@
 #include <set>
 
 class Nodo;
-/// @brief Clase Maze que implementa el laberinto, almacenando la matriz con el laberinto, las coordenads de entrada y salida, e implementa
-///        el algoritmo A* mediante su método "encontrar_camino"
+/// @brief Clase Maze que implementa el laberinto, almacenando la matriz con el laberinto, las coordenads de entrada 
+///        y salida, e implementa el algoritmo A* mediante su método "encontrar_camino"
 class Maze {
 public:
   Maze() = default;
@@ -35,12 +35,12 @@ public:
   }
   matrix_t<int>& get_laberinto() { return laberinto_; }
   void encontrar_camino(const bool& euclides);
-  void vuelta_atrás(const std::vector<Nodo*> nodos_cerrados);
+  void vuelta_atras(const std::vector<Nodo*> nodos_cerrados);
   void encontrar_nodo_abierto(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo>& nodos_abiertos_, Nodo* swapnode);
   bool encontrar_nodo_cerrado(std::vector<Nodo*>& nodos_cerrados, Nodo* find_nodo);
   bool abiertos_repetido(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo>& nodos_abiertos_, Nodo* busq_nodo);
   void imprimir_nodos_abiertos(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos_);
-  void escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, std::set<Nodo*, Nodo> nodos_generados);
+  void escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, const std::vector<Nodo*> nodos_generados);
   //Atributos en público para poder ser accedidos por los nodos
   std::pair<int, int> entrada_; // Coordenadas de la entrada (first = i_fila, second = j_col)
   std::pair<int, int> salida_;  // Coordenadas de la salida (first = i_fila, second = j_Col)

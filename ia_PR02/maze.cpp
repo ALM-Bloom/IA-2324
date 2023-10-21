@@ -20,10 +20,9 @@
 /// @brief Método que implementa el algoritmo A*
 /// @param euclides Booleano que identifica si se ha seleccionado la heurística alternativa (true)
 void Maze::encontrar_camino(const bool& euclides) {
-  int movimiento_i, movimiento_j, it = 1; // Coordenadas desde las que se estudian los posibles movimientos
+  int movimiento_i, movimiento_j; // Coordenadas desde las que se estudian los posibles movimientos
   int g_n_salida = 99999;
-  std::vector<Nodo*> visitados;
-  std::set<Nodo*, Nodo> nodos_generados;
+  std::vector<Nodo*> nodos_generados;
   std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos;
   std::vector<Nodo*> nodos_cerrados;
   Nodo* nodo_partida = new Nodo{entrada_.first, entrada_.second, 2};
@@ -33,13 +32,12 @@ void Maze::encontrar_camino(const bool& euclides) {
     nodo_partida->obtener_fn(*this, nodo_partida->get_gn());
   }
   nodos_abiertos.push(nodo_partida);
-  while (!nodos_abiertos.empty() && nodos_abiertos.top()->get_gn() < g_n_salida) { // Mientras la lista de nodos abiertas no esté vacía  
+  nodos_generados.emplace_back(nodo_partida);
+  while (!nodos_abiertos.empty() && nodos_abiertos.top()->get_fn() < g_n_salida) { // Mientras la lista de nodos abiertas no esté vacía  
     Nodo* iterator_nodo = nodos_abiertos.top();
     if (iterator_nodo->get_coord_i() == salida_.first && iterator_nodo->get_coord_j() == salida_.second) {
         g_n_salida = iterator_nodo->get_gn();
     }
-    visitados.emplace_back(iterator_nodo); //Para mostrar los nodos visitados en la tabla de resultados
-    // std::cout << "Nodo siendo analizado: " << iterator_nodo->get_coord_i() << "," << iterator_nodo->get_coord_j() << std::endl;
     //Cambio de Marcha
     movimiento_i = iterator_nodo->get_coord_i();
     movimiento_j = iterator_nodo->get_coord_j();
@@ -61,10 +59,10 @@ void Maze::encontrar_camino(const bool& euclides) {
                   newnodo->SetPadre(iterator_nodo);
                   if (!encontrar_nodo_cerrado(nodos_cerrados, newnodo) && !abiertos_repetido(nodos_abiertos, newnodo)) {
                     nodos_abiertos.push(newnodo);
-                    nodos_generados.emplace(newnodo);
+                    nodos_generados.emplace_back(newnodo);
                   }
                 if (abiertos_repetido(nodos_abiertos, newnodo)) {
-                encontrar_nodo_abierto(nodos_abiertos, newnodo);
+                  encontrar_nodo_abierto(nodos_abiertos, newnodo);
                 } 
             } else {
                 Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 0};
@@ -76,7 +74,7 @@ void Maze::encontrar_camino(const bool& euclides) {
                 newnodo->SetPadre(iterator_nodo);
                   if (!encontrar_nodo_cerrado(nodos_cerrados, newnodo) && !abiertos_repetido(nodos_abiertos, newnodo)) {
                     nodos_abiertos.push(newnodo);
-                    nodos_generados.emplace(newnodo);
+                    nodos_generados.emplace_back(newnodo);
                   }
                 if (abiertos_repetido(nodos_abiertos, newnodo)) {
                 encontrar_nodo_abierto(nodos_abiertos, newnodo);
@@ -89,13 +87,14 @@ void Maze::encontrar_camino(const bool& euclides) {
     nodos_abiertos.pop();
     nodos_cerrados.emplace_back(iterator_nodo);
   }
-  vuelta_atrás(nodos_cerrados);
-  escritura_a_fichero(visitados, nodos_generados);
+  nodos_cerrados.emplace_back(nodos_abiertos.top());
+  vuelta_atras(nodos_cerrados);
+  escritura_a_fichero(nodos_cerrados, nodos_generados);
 }
 
 /// @brief Método que busca el camino generado estudiando los padres desde la salida hasta la entrada
 /// @param nodos_cerrados La lista de nodos cerrados donde se encuentra la solución
-void Maze::vuelta_atrás(const std::vector<Nodo*> nodos_cerrados) {
+void Maze::vuelta_atras(const std::vector<Nodo*> nodos_cerrados) {
   Nodo* nodo_salida = nullptr;
   int coste_camino = 0;
   for (int i = 0; i < nodos_cerrados.size(); i++) {
@@ -200,22 +199,27 @@ void Maze::encontrar_nodo_abierto(std::priority_queue<Nodo*, std::vector<Nodo*>,
     return false;
   }
 
-void Maze::escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, std::set<Nodo*, Nodo> nodos_generados) {
+void Maze::escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, const std::vector<Nodo*> nodos_generados) {
     const std::string nombre_archivo = "resultado.txt";
     std::ofstream archivo_salida(nombre_archivo);
     if (archivo_salida.is_open()) {
       //Escribe los nodos visitados en el archivo.
-        archivo_salida << "Nodos visitados:" << std::endl;
-        for (Nodo* nodo : nodos_visitados) {
-            archivo_salida << "Coordenadas (" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << std::endl;
-        }
+        archivo_salida << "Nodos inspeccionados: ";
+        // for (Nodo* nodo : nodos_visitados) {
+        //     archivo_salida << "Coordenadas (" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << std::endl;
+        // }
+        archivo_salida << nodos_visitados.size() << std::endl;
         // Escribe los nodos generados en el archivo
+        archivo_salida << "Nº de nodos generados: " << nodos_generados.size() << std::endl;
         archivo_salida << "Nodos generados:" << std::endl;
         for (Nodo* nodo : nodos_generados) {
-            archivo_salida << "Coordenadas (" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << std::endl;
+            archivo_salida << "Coordenadas (" << nodo->get_coord_i() - 1 << ", " << nodo->get_coord_j() - 1 << ")" << std::endl;
         }
         //Escribe el camino en el archivo.
         archivo_salida << "Camino:" << std::endl;
+        if (camino.empty()) {
+          archivo_salida << "No existe camino" << std::endl;
+        }
         std::queue<Nodo*> copia_camino = camino; // Copia para no modificar el original
         while (!copia_camino.empty()) {
             Nodo* nodo = copia_camino.front();

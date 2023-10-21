@@ -34,13 +34,12 @@ public:
   int get_coord_i() { return coord_i_;}
   int get_coord_j() { return coord_j_;}
   bool operator()(Nodo* other, Nodo* other_node)  { return other->get_fn() > other_node->get_fn(); }
-  bool operator()(Nodo* nodo1, Nodo* nodo2) const {  return (nodo1->get_coord_i() == nodo2->get_coord_i()) && (nodo1->get_coord_j() == nodo2->get_coord_j()); }
 
 private:
   int funcion_movimiento_; // f(n) y valor identificativo del nodo
   Nodo *nodopadre_; //Nodo Padre
-  int coord_i_, coord_j_;
-  int is_diag_;
+  int coord_i_, coord_j_; //Coordenadas del nodo en el laberinto
+  int is_diag_; //Entero para comprobar si el nodo ha sido accedido diagonalmente (0 no, 1 diagonal)
   int acumulado_propio_; //g(n) coste acumulado del nodo
 };
 
