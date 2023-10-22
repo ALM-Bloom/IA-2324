@@ -21,10 +21,10 @@
 /// @param euclides Booleano que identifica si se ha seleccionado la heurística alternativa (true)
 void Maze::encontrar_camino(const bool& euclides) {
   int movimiento_i, movimiento_j; // Coordenadas desde las que se estudian los posibles movimientos
-  int g_n_salida = 99999;
-  std::vector<Nodo*> nodos_generados;
-  std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos;
-  std::vector<Nodo*> nodos_cerrados;
+  int g_n_salida = 99999; //g(n) de referencia, hasta que se encuentre la salida tendrá un valor arbitrario
+  std::vector<Nodo*> nodos_generados; //Vector que almacenará los nodos generadas para escribirlos en el fichero
+  std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos; //Lista de nodos abiertos
+  std::vector<Nodo*> nodos_cerrados; //Lista de nodos cerrados
   Nodo* nodo_partida = new Nodo{entrada_.first, entrada_.second, 2};
   if (euclides == true) {
     nodo_partida->obtener_fn_alternativo(*this, nodo_partida->get_gn());
@@ -34,7 +34,7 @@ void Maze::encontrar_camino(const bool& euclides) {
   nodos_abiertos.push(nodo_partida);
   nodos_generados.emplace_back(nodo_partida);
   while (!nodos_abiertos.empty() && nodos_abiertos.top()->get_fn() < g_n_salida) { // Mientras la lista de nodos abiertas no esté vacía  
-    Nodo* iterator_nodo = nodos_abiertos.top();
+    Nodo* iterator_nodo = nodos_abiertos.top(); //Nodo que se está inspeccionando
     if (iterator_nodo->get_coord_i() == salida_.first && iterator_nodo->get_coord_j() == salida_.second) {
         g_n_salida = iterator_nodo->get_gn();
     }
@@ -50,19 +50,19 @@ void Maze::encontrar_camino(const bool& euclides) {
             if ((mov_horiz == 1 && mov_vert == 1) ||
                 (mov_horiz == 1 && mov_vert == -1) ||
                 (mov_horiz == -1 && mov_vert == 1) || (mov_horiz == -1 && mov_vert == -1)) { //Para averiguar si es diagonal
-                  Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 1};
+                  Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 1}; //Se genera el nodo
                   if (euclides == true) {
-                    newnodo->obtener_fn_alternativo(*this, iterator_nodo->get_gn());
+                    newnodo->obtener_fn_alternativo(*this, iterator_nodo->get_gn()); //f(n) con Euclides
                   } else {
-                    newnodo->obtener_fn(*this, iterator_nodo->get_gn());
+                    newnodo->obtener_fn(*this, iterator_nodo->get_gn()); //f(n) con Manhattan
                   }
-                  newnodo->SetPadre(iterator_nodo);
-                  if (!encontrar_nodo_cerrado(nodos_cerrados, newnodo) && !abiertos_repetido(nodos_abiertos, newnodo)) {
+                  newnodo->SetPadre(iterator_nodo); //Se establece el puntero del nodo padre al nodo que se está inspeccionando
+                  if (!encontrar_nodo_cerrado(nodos_cerrados, newnodo) && !abiertos_repetido(nodos_abiertos, newnodo)) { //Si no se encuentra en ninguna lista
                     nodos_abiertos.push(newnodo);
                     nodos_generados.emplace_back(newnodo);
                   }
-                if (abiertos_repetido(nodos_abiertos, newnodo)) {
-                  encontrar_nodo_abierto(nodos_abiertos, newnodo);
+                if (abiertos_repetido(nodos_abiertos, newnodo)) { //Si se encuentra en la lista de nodos abiertos
+                  encontrar_nodo_abierto(nodos_abiertos, newnodo); //Se intenta actualizar su g(n)
                 } 
             } else {
                 Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 0};

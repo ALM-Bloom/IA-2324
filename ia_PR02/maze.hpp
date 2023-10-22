@@ -41,14 +41,14 @@ public:
   bool abiertos_repetido(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo>& nodos_abiertos_, Nodo* busq_nodo);
   void imprimir_nodos_abiertos(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos_);
   void escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, const std::vector<Nodo*> nodos_generados);
-  //Atributos en público para poder ser accedidos por los nodos
+  //Atributos en público para poder ser directamente accedidos por los nodos
   std::pair<int, int> entrada_; // Coordenadas de la entrada (first = i_fila, second = j_col)
   std::pair<int, int> salida_;  // Coordenadas de la salida (first = i_fila, second = j_Col)
 
 private:
   matrix_t<int> laberinto_; //Matriz con el laberinto
   std::queue<Nodo*> camino;
-  int coste_total;
+  int coste_total = 0;
 };
 
 
