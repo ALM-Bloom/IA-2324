@@ -1,10 +1,9 @@
 /**
  * @file nodo.cpp
  * @author Alejandro M.L (alu0101443126@ull.edu.es)
- * @brief Definición de la clase Nodo y sus métodos. Tales como comprobar si su
- * adyacencia es nula o realizar el recorrido en amplitud.
+ * @brief Definición de la clase Nodo y sus métodos.  Que se encarga de calcular su f(n)
  * @version 0.1
- * @date 2022-10-15
+ * @date 2023-10-15
  *
  * @copyright Alejandro M.L (c) 2022
  *

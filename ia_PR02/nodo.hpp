@@ -1,9 +1,9 @@
 /**
  * @file nodo.h
  * @author Alejandro M. L. (alu0101443126@ull.edu.es)
- * @brief Declaración de la clase Nodo
+ * @brief Declaración de la clase Nodo, que representa a una casilla en el laberinto
  * @version 0.1
- * @date 2022-10-15
+ * @date 2023-10-15
  *
  * @copyright Alejandro M.L (c) 2022
  *

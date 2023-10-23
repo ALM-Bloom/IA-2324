@@ -4,7 +4,7 @@
  * @brief Definición de la Clase Maze que representa la solución al problema del
  * laberinto
  * @version 0.1
- * @date 2023-10-05
+ * @date 2023-10-15
  *
  * @copyright Alejandro M.L (c) 2022
  *
@@ -16,15 +16,47 @@
 #include <queue>
 #include <fstream>
 #include <set>
+#include <random>
+
+Nodo* Maze::escoger_azar(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo>& nodos_abiertos_) {
+    if (nodos_abiertos_.empty()) { //Si la lista está vacía
+        return nullptr;
+    }
+
+    int num_nodos = nodos_abiertos_.size(), random = 2; 
+    if (num_nodos < 3) { //Si los nodos fronteras son menores que 3
+        random = num_nodos - 1; //Random irá de 0 al número de nodos menor que 3 que existen
+    }
+    //Herramienta de generación aleatoria
+    std::random_device rd; 
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(0, random);
+
+    Nodo* nodo_seleccionado = nullptr; //El nodo que se seleccionará se inicializa en null
+    std::vector<Nodo*> nodos_temporales; //Vector que contendrá los nodos a elegir aleatoriamente
+    nodos_temporales.reserve(num_nodos); //Resize del vector
+    while (!nodos_abiertos_.empty()) { 
+        nodos_temporales.push_back(nodos_abiertos_.top()); //Se meten los nodos_abiertos en el vector
+        nodos_abiertos_.pop();
+    }
+    int indice_aleatorio = dist(gen); //Se ajusta el índice, siendo 0, 1 o 2 las posibilidades aleatorias
+    nodo_seleccionado = nodos_temporales[indice_aleatorio]; //El nodo seleccionado será el nodo indexado en la posición aleatoria
+    nodos_temporales.erase(nodos_temporales.begin() + indice_aleatorio); //Se elimina del vector el nodo seleccionado
+    for (Nodo* nodo : nodos_temporales) { //Se vuelcan de nuevo los nodos del vector a la lista de prioridad
+        nodos_abiertos_.push(nodo);
+    }
+
+    return nodo_seleccionado; //Se devuelve el nodo aleatorio seleccionado
+}
 
 /// @brief Método que implementa el algoritmo A*
 /// @param euclides Booleano que identifica si se ha seleccionado la heurística alternativa (true)
 void Maze::encontrar_camino(const bool& euclides) {
   int movimiento_i, movimiento_j; // Coordenadas desde las que se estudian los posibles movimientos
-  int g_n_salida = 99999;
-  std::vector<Nodo*> nodos_generados;
-  std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos;
-  std::vector<Nodo*> nodos_cerrados;
+  int g_n_salida = 99999; //g(n) de referencia, hasta que se encuentre la salida tendrá un valor arbitrario
+  std::vector<Nodo*> nodos_generados, nodos_visitados; //Vector que almacenará los nodos generadas para escribirlos en el fichero
+  std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos; //Lista de nodos abiertos
+  std::vector<Nodo*> nodos_cerrados; //Lista de nodos cerrados
   Nodo* nodo_partida = new Nodo{entrada_.first, entrada_.second, 2};
   if (euclides == true) {
     nodo_partida->obtener_fn_alternativo(*this, nodo_partida->get_gn());
@@ -33,8 +65,9 @@ void Maze::encontrar_camino(const bool& euclides) {
   }
   nodos_abiertos.push(nodo_partida);
   nodos_generados.emplace_back(nodo_partida);
-  while (!nodos_abiertos.empty() && nodos_abiertos.top()->get_fn() < g_n_salida) { // Mientras la lista de nodos abiertas no esté vacía  
-    Nodo* iterator_nodo = nodos_abiertos.top();
+  while (!nodos_abiertos.empty() && nodos_abiertos.top()->get_fn() < g_n_salida) { // Mientras la   lista de nodos abiertas no esté vacía  
+    Nodo* iterator_nodo = escoger_azar(nodos_abiertos); //El nodo que se inspeccionará será el devuelto por el método aleatorio
+    nodos_visitados.emplace_back(iterator_nodo);
     if (iterator_nodo->get_coord_i() == salida_.first && iterator_nodo->get_coord_j() == salida_.second) {
         g_n_salida = iterator_nodo->get_gn();
     }
@@ -50,19 +83,19 @@ void Maze::encontrar_camino(const bool& euclides) {
             if ((mov_horiz == 1 && mov_vert == 1) ||
                 (mov_horiz == 1 && mov_vert == -1) ||
                 (mov_horiz == -1 && mov_vert == 1) || (mov_horiz == -1 && mov_vert == -1)) { //Para averiguar si es diagonal
-                  Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 1};
+                  Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 1}; //Se genera el nodo
                   if (euclides == true) {
-                    newnodo->obtener_fn_alternativo(*this, iterator_nodo->get_gn());
+                    newnodo->obtener_fn_alternativo(*this, iterator_nodo->get_gn()); //f(n) con Euclides
                   } else {
-                    newnodo->obtener_fn(*this, iterator_nodo->get_gn());
+                    newnodo->obtener_fn(*this, iterator_nodo->get_gn()); //f(n) con Manhattan
                   }
-                  newnodo->SetPadre(iterator_nodo);
-                  if (!encontrar_nodo_cerrado(nodos_cerrados, newnodo) && !abiertos_repetido(nodos_abiertos, newnodo)) {
+                  newnodo->SetPadre(iterator_nodo); //Se establece el puntero del nodo padre al nodo que se está inspeccionando
+                  if (!encontrar_nodo_cerrado(nodos_cerrados, newnodo) && !abiertos_repetido(nodos_abiertos, newnodo)) { //Si no se encuentra en ninguna lista
                     nodos_abiertos.push(newnodo);
                     nodos_generados.emplace_back(newnodo);
                   }
-                if (abiertos_repetido(nodos_abiertos, newnodo)) {
-                  encontrar_nodo_abierto(nodos_abiertos, newnodo);
+                if (abiertos_repetido(nodos_abiertos, newnodo)) { //Si se encuentra en la lista de nodos abiertos
+                  encontrar_nodo_abierto(nodos_abiertos, newnodo); //Se intenta actualizar su g(n)
                 } 
             } else {
                 Nodo* newnodo = new Nodo{movimiento_i + mov_vert, movimiento_j + mov_horiz, 0};
@@ -83,13 +116,13 @@ void Maze::encontrar_camino(const bool& euclides) {
           }
         }
       }
-    }
-    nodos_abiertos.pop();
     nodos_cerrados.emplace_back(iterator_nodo);
   }
+  }
   vuelta_atras(nodos_cerrados);
-  escritura_a_fichero(nodos_cerrados, nodos_generados);
+  escritura_a_fichero(nodos_visitados, nodos_generados);
 }
+
 
 /// @brief Método que busca el camino generado estudiando los padres desde la salida hasta la entrada
 /// @param nodos_cerrados La lista de nodos cerrados donde se encuentra la solución
@@ -201,11 +234,12 @@ void Maze::escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, const s
     std::ofstream archivo_salida(nombre_archivo);
     if (archivo_salida.is_open()) {
       //Escribe los nodos visitados en el archivo.
+        archivo_salida << "Nº Nodos Inspeccionados: " << nodos_visitados.size() << std::endl;
         archivo_salida << "Nodos inspeccionados: ";
-        // for (Nodo* nodo : nodos_visitados) {
-        //     archivo_salida << "Coordenadas (" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << std::endl;
-        // }
-        archivo_salida << nodos_visitados.size() << std::endl;
+        for (Nodo* nodo : nodos_visitados) {
+            archivo_salida << "(" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << "), ";
+        }
+        archivo_salida << std::endl;
         // Escribe los nodos generados en el archivo
         archivo_salida << "Nº de nodos generados: " << nodos_generados.size() << std::endl;
         archivo_salida << "Nodos generados:" << std::endl;
@@ -214,7 +248,7 @@ void Maze::escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, const s
         }
         archivo_salida << std::endl;
         //Escribe el camino en el archivo.
-        archivo_salida << "Coste Camino = " << coste_total << std::endl;
+        archivo_salida << "Coste Camino = " << coste_total << std::endl;  
         archivo_salida << "Camino:" << std::endl;
         if (camino.empty()) {
           archivo_salida << "No existe camino" << std::endl;
@@ -225,6 +259,8 @@ void Maze::escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, const s
             archivo_salida << "(" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << " , ";
             copia_camino.pop();
         }
+        archivo_salida << std::endl;
+        archivo_salida << laberinto_;
         archivo_salida.close();
         std::cout << "Datos escritos en " << nombre_archivo << std::endl;
     } else {

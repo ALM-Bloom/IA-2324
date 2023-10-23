@@ -1,0 +1,24 @@
+Nº Nodos Inspeccionados: 26
+Nodos inspeccionados: (5, 1), (6, 2), (4, 2), (6, 3), (5, 3), (6, 4), (5, 2), (7, 3), (4, 3), (7, 2), (6, 5), (7, 4), (7, 6), (6, 6), (6, 7), (7, 5), (3, 3), (3, 2), (6, 8), (6, 9), (8, 2), (6, 10), (5, 8), (8, 3), (7, 8), (7, 7), 
+Nº de nodos generados: 36
+Nodos generados:
+(5, 1), (4, 2), (5, 2), (6, 2), (7, 2), (5, 3), (6, 3), (7, 3), (3, 2), (3, 3), (4, 3), (6, 4), (7, 4), (6, 5), (7, 5), (8, 2), (8, 3), (6, 6), (7, 6), (6, 7), (7, 7), (5, 8), (6, 8), (7, 8), (2, 2), (2, 3), (5, 9), (6, 9), (7, 9), (6, 10), (9, 2), (9, 3), (4, 8), (4, 9), (8, 8), (8, 9), 
+Coste Camino = 47
+Camino:
+(6, 10) , (6, 9) , (6, 8) , (6, 7) , (6, 6) , (6, 5) , (6, 4) , (6, 3) , (6, 2) , (5, 1) , 
+11x10
+1 1 1 1 1 1 1 1 1 1 
+1 0 0 1 0 0 0 0 0 1 
+1 0 0 1 0 0 0 0 0 1 
+1 0 0 1 0 0 1 0 0 1 
+3 0 0 1 1 1 1 0 0 1 
+1 5 5 5 5 5 5 5 5 4 
+1 0 0 0 0 0 0 0 0 1 
+1 0 0 1 1 1 1 0 0 1 
+1 0 0 1 0 0 0 0 0 1 
+1 0 0 1 0 0 0 0 0 1 
+1 1 1 1 1 1 1 1 1 1 
+
+Comparando los resultados con la ejecución del programa sin modificar. Se observa que, se genera el mismo camino puesto que el algoritmo A*
+siempre encuentra el de menor coste. Sin embargo, el número de nodos inspeccionados aumenta a la par que el de generados y es que no se estudiará
+siempre el nodo de menor coste por lo que costará más iteraciones encontrar el camino óptimo.

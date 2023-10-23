@@ -4,7 +4,7 @@
  * @brief Definición de la Clase Maze que representa la solución al problema del
  * laberinto
  * @version 0.1
- * @date 2023-10-05
+ * @date 2023-10-15
  *
  * @copyright Alejandro M.L (c) 2022
  *
@@ -201,11 +201,12 @@ void Maze::escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, const s
     std::ofstream archivo_salida(nombre_archivo);
     if (archivo_salida.is_open()) {
       //Escribe los nodos visitados en el archivo.
+        archivo_salida << "Nº Nodos Inspeccionados: " << nodos_visitados.size() << std::endl;
         archivo_salida << "Nodos inspeccionados: ";
-        // for (Nodo* nodo : nodos_visitados) {
-        //     archivo_salida << "Coordenadas (" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << std::endl;
-        // }
-        archivo_salida << nodos_visitados.size() << std::endl;
+        for (Nodo* nodo : nodos_visitados) {
+            archivo_salida << "(" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << "), ";
+        }
+        archivo_salida << std::endl;
         // Escribe los nodos generados en el archivo
         archivo_salida << "Nº de nodos generados: " << nodos_generados.size() << std::endl;
         archivo_salida << "Nodos generados:" << std::endl;
@@ -225,6 +226,8 @@ void Maze::escritura_a_fichero(const std::vector<Nodo*> nodos_visitados, const s
             archivo_salida << "(" << nodo->get_coord_i() << ", " << nodo->get_coord_j() << ")" << " , ";
             copia_camino.pop();
         }
+        archivo_salida << std::endl;
+        archivo_salida << laberinto_;
         archivo_salida.close();
         std::cout << "Datos escritos en " << nombre_archivo << std::endl;
     } else {

@@ -1,9 +1,9 @@
 /**
- * @file main.cpp
+ * @file maze.hpp
  * @author Alejandro M. L. (alu0101443126@ull.edu.es)
- * @brief Declaración de la función main principal
+ * @brief Declaración de los métodos de la Clase Maze, que implementa el algoritmo A*
  * @version 0.1
- * @date 2023-10-04
+ * @date 2023-10-15
  *
  * @copyright Alejandro M.L (c) 2022
  *

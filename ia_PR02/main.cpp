@@ -3,7 +3,7 @@
  * @author Alejandro M. L. (alu0101443126@ull.edu.es)
  * @brief Declaración de la función main principal
  * @version 0.1
- * @date 2023-10-04
+ * @date 2023-10-18
  *
  * @copyright Alejandro M.L (c) 2022
  *
@@ -70,13 +70,13 @@ int main(int argc, char *argv[]) {
     std::cout << "Introduzca las coordenadas de la entrada" << std::endl;
     std::cin >> lec_entrada;
     std::cin >> lec_salida;
-    laberinto.set_entrada(lec_entrada, lec_salida);
-    camino.at(lec_entrada, lec_salida) = 3;
+    laberinto.set_entrada(lec_entrada + 1, lec_salida + 1);
+    camino.at(lec_entrada + 1, lec_salida + 1) = 3;
     std::cout << "Introduzca las coordenadas de la salida" << std::endl;
     std::cin >> lec_entrada;
     std::cin >> lec_salida;
-    laberinto.set_salida(lec_entrada, lec_salida);
-    camino.at(lec_entrada, lec_salida) = 4;
+    laberinto.set_salida(lec_entrada + 1, lec_salida + 1);
+    camino.at(lec_entrada + 1, lec_salida + 1) = 4;
   }
   laberinto.set_matrix(camino);
   std::cout << laberinto.get_laberinto();

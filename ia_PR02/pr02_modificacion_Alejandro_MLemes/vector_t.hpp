@@ -1,3 +1,15 @@
+/**
+ * @file matrix.hpp
+ * @author Alejandro M.L (alu0101443126@ull.edu.es)
+ * @brief Definición de la clase Vector y sus métodos. Este código ya ha sido utilizado en la asignatura
+ *         "Algoritmos y Estructura de Datos"
+ * @version 0.1
+ * @date 2023-10-15
+ *
+ * @copyright Alejandro M.L (c) 2022
+ *
+ */
+
 #pragma once
 #include <cassert>
 #include <iostream>

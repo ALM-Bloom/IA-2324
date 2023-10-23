@@ -1,19 +1,16 @@
 /**
  * @file nodo.h
  * @author Alejandro M. L. (alu0101443126@ull.edu.es)
- * @brief Declaración de la clase Nodo, que es responsable de almacenar el coste
- * y adicionalmente, el nodo adyacente. Por ende, la estructura de la clase
- * sería: Nodo = {costo, siguiente nodo}, donde siguiente nodo pudiera ser Null
- * si no existe adyacencia.
+ * @brief Declaración de la clase Nodo, que representa a una casilla en el laberinto
  * @version 0.1
- * @date 2022-10-15
+ * @date 2023-10-15
  *
  * @copyright Alejandro M.L (c) 2022
  *
  */
 
-#ifndef NODO_H
-#define NODO_H
+#ifndef NODO_HPP
+#define NODO_HPP
 #include <iostream>
 #include <utility>
 #include <vector>
