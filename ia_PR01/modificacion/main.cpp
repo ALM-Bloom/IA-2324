@@ -15,6 +15,7 @@
 #include <vector>
 
 int main(int argc, char *argv[]) {
+ srand(time(NULL));
   bool inicio = true;
   int aristas = 0, contnodo = 0, contnodoconexion = 1, option, id_origen, id_destino;
   Grafo grafismo;

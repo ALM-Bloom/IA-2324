@@ -31,7 +31,6 @@ Nodo* Maze::escoger_azar(std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo>& n
     std::random_device rd; 
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dist(0, random);
-
     Nodo* nodo_seleccionado = nullptr; //El nodo que se seleccionará se inicializa en null
     std::vector<Nodo*> nodos_temporales; //Vector que contendrá los nodos a elegir aleatoriamente
     nodos_temporales.reserve(num_nodos); //Resize del vector
@@ -116,11 +115,11 @@ void Maze::encontrar_camino(const bool& euclides) {
           }
         }
       }
-    nodos_cerrados.emplace_back(iterator_nodo);
-  }
+    }
+      nodos_cerrados.emplace_back(iterator_nodo);
   }
   vuelta_atras(nodos_cerrados);
-  escritura_a_fichero(nodos_visitados, nodos_generados);
+  escritura_a_fichero(nodos_cerrados, nodos_generados);
 }
 
 

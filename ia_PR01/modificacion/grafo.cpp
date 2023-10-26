@@ -38,14 +38,13 @@ bool Grafo::Insercion(Nodo *novonodo) {
 void Grafo::RandomBFS(int id_origen, const int id_destino) {
   static int cont_random = 0;
   cont_random++;
-  srand(time(NULL));
-  int randNum = rand()%(vecgrafo[id_origen]->GetVector().size());
+  int randNum = rand() % 4;
   std::cout << "Nodo Random elegido: " << randNum << std::endl;
-  BusquedaBfs(vecgrafo[id_origen]->GetVector()[randNum].first->GetId(), id_destino);
-  if (cont_random == 10) {
-    std::cerr << "No existe camino" << std::endl;
-    return;
-  }
+  // BusquedaBfs(vecgrafo[id_origen]->GetVector()[randNum].first->GetId(), id_destino);
+  // if (cont_random == 10) {
+  //   std::cerr << "No existe camino" << std::endl;
+  //   return;
+  // }
   RandomBFS(id_origen, id_destino);
 }
 void Grafo::BusquedaBfs(const int id_origen, const int id_destino) {
