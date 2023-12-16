@@ -64,6 +64,7 @@ void Grafo::BusquedaBfs(const int id_origen, const int id_destino) {
         cola_no_visitados.push(vecgrafo[iterator]->GetVector()[i].first->GetId()); //Se mete en la cola el nodo generado
       }
     }
+    it++;
     cola_no_visitados.pop(); //Se extrae el nodo estudiado de la cola
   }
   std::cerr << "No se ha encontrado solución" << std::endl;
@@ -118,7 +119,7 @@ void Grafo::Escritura(const std::vector<int> &visitados, const std::vector<int> 
     fichero << "No existe camino";
   }
   while (!camino.empty()) {
-    fichero << camino.top();
+    fichero << camino.top() - 1;
     if (camino.size() != 1) {
       fichero << ", ";
     }
@@ -127,7 +128,7 @@ void Grafo::Escritura(const std::vector<int> &visitados, const std::vector<int> 
     fichero << std::endl;
   fichero << "Generados: ";
   for (int i = 0; i < generados.size(); i++) {
-    fichero << generados[i];
+    fichero << generados[i] - 1;
     if (i != generados.size() - 1) {
       fichero << ", ";
     }
@@ -135,7 +136,7 @@ void Grafo::Escritura(const std::vector<int> &visitados, const std::vector<int> 
   fichero << std::endl;
   fichero << "Visitados: ";
   for (int i = 0; i < visitados.size(); i++) {
-    fichero << visitados[i];
+    fichero << visitados[i] - 1;
     if (i != visitados.size() - 1) {
       fichero << ", ";
     }
@@ -143,5 +144,6 @@ void Grafo::Escritura(const std::vector<int> &visitados, const std::vector<int> 
     fichero << std::endl;
   fichero << "Coste: " << coste;
   fichero << std::endl;
+  std::cout << "Iteraciones: " << it << std::endl;
   return;
 }

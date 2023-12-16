@@ -25,6 +25,7 @@ void Maze::encontrar_camino(const bool& euclides) {
   std::vector<Nodo*> nodos_generados; //Vector que almacenará los nodos generadas para escribirlos en el fichero
   std::priority_queue<Nodo*, std::vector<Nodo*>, Nodo> nodos_abiertos; //Lista de nodos abiertos
   std::vector<Nodo*> nodos_cerrados; //Lista de nodos cerrados
+  int it = 0;
   Nodo* nodo_partida = new Nodo{entrada_.first, entrada_.second, 2};
   if (euclides == true) {
     nodo_partida->obtener_fn_alternativo(*this, nodo_partida->get_gn());
@@ -84,6 +85,9 @@ void Maze::encontrar_camino(const bool& euclides) {
         }
       }
     }
+    std::cout << "Iteración: " << it << std::endl;
+    imprimir_nodos_abiertos(nodos_abiertos);
+    it++;
     nodos_abiertos.pop();
     nodos_cerrados.emplace_back(iterator_nodo);
   }

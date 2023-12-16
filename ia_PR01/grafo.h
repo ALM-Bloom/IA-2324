@@ -36,6 +36,7 @@ private:
   std::vector<Nodo *> vecgrafo; //Vector que contiene todos los nodos
   unsigned total_nodos_;   //Número total de nodos en el grafo (equivalente a vecgrafo.size)
   unsigned total_aristas_; //Número total de aristas en el grafo (no usado)
+  int it = 0;
 };
 
 #endif

@@ -1,0 +1,2 @@
+Instancia   n   m   v_0  v_d         Camino       Distancia          Nodos Generados            Nodos Inspeccionados
+ID-1        8  12   1    8       {4, 5, 6, 8}       3        {4, 1, 2, 5, 3, 7, 6, 8}      {4, 1, 2, 5, 3, 7, 6, 8}
