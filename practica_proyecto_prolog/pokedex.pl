@@ -1,10 +1,13 @@
-% Práctica "Proyecto Prolog"
-% "Pokédex Avanzada en Prolog"
-% Inteligencia Artificial 2023/2024
-% Autor: Alejandro M.L
+% Universidad de La Laguna
+% Escuela Superior de Ingeniería y Tecnología
+% Grado en Ingeniería Informática
+% Asignatura: Inteligencia Artificial
+% Curso: 3º
+% Práctica 4: Proyecto individual de Prolog
+% Autor: Alejandro M.L (alu0101443126@ull.edu.es)
+% Fecha: 18/12/2023
 
 % Hechos
-% Definición de Pokémon de primera generación
 
 % Hechos para Pokémon de primera generación
 pokemon(bulbasaur).
@@ -58,109 +61,10 @@ pokemon(venonat).
 pokemon(venomoth).
 pokemon(diglett).
 pokemon(dugtrio).
-pokemon(meowth).
-pokemon(persian).
-pokemon(psyduck).
-pokemon(golduck).
-pokemon(mankey).
-pokemon(primeape).
-pokemon(growlithe).
-pokemon(arcanine).
-pokemon(poliwag).
-pokemon(poliwhirl).
-pokemon(poliwrath).
-pokemon(abra).
-pokemon(kadabra).
-pokemon(alakazam).
-pokemon(machop).
-pokemon(machoke).
-pokemon(machamp).
-pokemon(bellsprout).
-pokemon(weepinbell).
-pokemon(victreebel).
-pokemon(tentacool).
-pokemon(tentacruel).
-pokemon(geodude).
-pokemon(graveler).
-pokemon(golem).
-pokemon(ponyta).
-pokemon(rapidash).
-pokemon(slowpoke).
-pokemon(slowbro).
-pokemon(magnemite).
-pokemon(magneton).
-pokemon(farfetchd).
-pokemon(doduo).
-pokemon(dodrio).
-pokemon(seel).
-pokemon(dewgong).
-pokemon(grimer).
-pokemon(muk).
-pokemon(shellder).
-pokemon(cloyster).
-pokemon(gastly).
-pokemon(haunter).
-pokemon(gengar).
-pokemon(onix).
-pokemon(drowzee).
-pokemon(hypno).
-pokemon(krabby).
-pokemon(kingler).
-pokemon(voltorb).
-pokemon(electrode).
-pokemon(exeggcute).
-pokemon(exeggutor).
-pokemon(cubone).
-pokemon(marowak).
-pokemon(hitmonlee).
-pokemon(hitmonchan).
-pokemon(lickitung).
-pokemon(koffing).
-pokemon(weezing).
-pokemon(rhyhorn).
-pokemon(rhydon).
-pokemon(chansey).
-pokemon(tangela).
-pokemon(kangaskhan).
-pokemon(horsea).
-pokemon(seadra).
-pokemon(goldeen).
-pokemon(seaking).
-pokemon(staryu).
-pokemon(starmie).
-pokemon(mr_mime).
-pokemon(scyther).
-pokemon(jynx).
-pokemon(electabuzz).
-pokemon(magmar).
-pokemon(pinsir).
-pokemon(tauros).
-pokemon(magikarp).
-pokemon(gyarados).
-pokemon(lapras).
-pokemon(ditto).
-pokemon(eevee).
-pokemon(vaporeon).
-pokemon(jolteon).
-pokemon(flareon).
-pokemon(porygon).
-pokemon(omanyte).
-pokemon(omastar).
-pokemon(kabuto).
-pokemon(kabutops).
-pokemon(aerodactyl).
-pokemon(snorlax).
-pokemon(articuno).
-pokemon(zapdos).
-pokemon(moltres).
-pokemon(dratini).
-pokemon(dragonair).
-pokemon(dragonite).
-pokemon(mewtwo).
-pokemon(mew).
 
 
 % Hechos para Tipos de Pokémon
+
 tipo(bulbasaur, planta).
 tipo(bulbasaur, veneno).
 tipo(ivysaur, planta).
@@ -236,147 +140,6 @@ tipo(venomoth, bicho).
 tipo(venomoth, veneno).
 tipo(diglett, tierra).
 tipo(dugtrio, tierra).
-tipo(meowth, normal).
-tipo(persian, normal).
-tipo(psyduck, agua).
-tipo(golduck, agua).
-tipo(mankey, lucha).
-tipo(primeape, lucha).
-tipo(growlithe, fuego).
-tipo(arcanine, fuego).
-tipo(poliwag, agua).
-tipo(poliwhirl, agua).
-tipo(poliwrath, agua).
-tipo(poliwrath, lucha).
-tipo(abra, psíquico).
-tipo(kadabra, psíquico).
-tipo(alakazam, psíquico).
-tipo(machop, lucha).
-tipo(machoke, lucha).
-tipo(machamp, lucha).
-tipo(bellsprout, planta).
-tipo(bellsprout, veneno).
-tipo(weepinbell, planta).
-tipo(weepinbell, veneno).
-tipo(victreebel, planta).
-tipo(victreebel, veneno).
-tipo(tentacool, agua).
-tipo(tentacool, veneno).
-tipo(tentacruel, agua).
-tipo(tentacruel, veneno).
-tipo(geodude, roca).
-tipo(geodude, tierra).
-tipo(graveler, roca).
-tipo(graveler, tierra).
-tipo(golem, roca).
-tipo(golem, tierra).
-tipo(ponyta, fuego).
-tipo(rapidash, fuego).
-tipo(slowpoke, agua).
-tipo(slowpoke, psíquico).
-tipo(slowbro, agua).
-tipo(slowbro, psíquico).
-tipo(magnemite, eléctrico).
-tipo(magnemite, acero).
-tipo(magneton, eléctrico).
-tipo(magneton, acero).
-tipo(farfetchd, normal).
-tipo(farfetchd, volador).
-tipo(doduo, normal).
-tipo(doduo, volador).
-tipo(dodrio, normal).
-tipo(dodrio, volador).
-tipo(seel, agua).
-tipo(dewgong, agua).
-tipo(dewgong, hielo).
-tipo(grimer, veneno).
-tipo(muk, veneno).
-tipo(shellder, agua).
-tipo(cloyster, agua).
-tipo(cloyster, hielo).
-tipo(gastly, fantasma).
-tipo(gastly, veneno).
-tipo(haunter, fantasma).
-tipo(haunter, veneno).
-tipo(gengar, fantasma).
-tipo(gengar, veneno).
-tipo(onix, roca).
-tipo(onix, tierra).
-tipo(drowzee, psíquico).
-tipo(hypno, psíquico).
-tipo(krabby, agua).
-tipo(kingler, agua).
-tipo(voltorb, eléctrico).
-tipo(electrode, eléctrico).
-tipo(exeggcute, planta).
-tipo(exeggcute, psíquico).
-tipo(exeggutor, planta).
-tipo(exeggutor, psíquico).
-tipo(cubone, tierra).
-tipo(marowak, tierra).
-tipo(hitmonlee, lucha).
-tipo(hitmonchan, lucha).
-tipo(lickitung, normal).
-tipo(koffing, veneno).
-tipo(weezing, veneno).
-tipo(rhyhorn, tierra).
-tipo(rhyhorn, roca).
-tipo(rhydon, tierra).
-tipo(rhydon, roca).
-tipo(chansey, normal).
-tipo(tangela, planta).
-tipo(kangaskhan, normal).
-tipo(horsea, agua).
-tipo(seadra, agua).
-tipo(goldeen, agua).
-tipo(seaking, agua).
-tipo(staryu, agua).
-tipo(starmie, agua).
-tipo(starmie, psíquico).
-tipo(mr_mime, psíquico).
-tipo(scyther, bicho).
-tipo(scyther, volador).
-tipo(jynx, hielo).
-tipo(jynx, psíquico).
-tipo(electabuzz, eléctrico).
-tipo(magmar, fuego).
-tipo(pinsir, bicho).
-tipo(tauros, normal).
-tipo(magikarp, agua).
-tipo(gyarados, agua).
-tipo(gyarados, volador).
-tipo(lapras, agua).
-tipo(lapras, hielo).
-tipo(ditto, normal).
-tipo(eevee, normal).
-tipo(vaporeon, agua).
-tipo(jolteon, eléctrico).
-tipo(flareon, fuego).
-tipo(porygon, normal).
-tipo(omanyte, roca).
-tipo(omanyte, agua).
-tipo(omastar, roca).
-tipo(omastar, agua).
-tipo(kabuto, roca).
-tipo(kabuto, agua).
-tipo(kabutops, roca).
-tipo(kabutops, agua).
-tipo(aerodactyl, roca).
-tipo(aerodactyl, volador).
-tipo(snorlax, normal).
-tipo(articuno, hielo).
-tipo(articuno, volador).
-tipo(zapdos, eléctrico).
-tipo(zapdos, volador).
-tipo(moltres, fuego).
-tipo(moltres, volador).
-tipo(dratini, dragón).
-tipo(dragonair, dragón).
-tipo(dragonite, dragón).
-tipo(dragonite, volador).
-tipo(mewtwo, psíquico).
-tipo(mew, psíquico).
-
 
 % TABLA DE TIPOS
 
@@ -387,7 +150,7 @@ eficaz(agua, fuego).
 eficaz(agua, roca).
 eficaz(agua, tierra).
 eficaz(bicho, planta).
-eficaz(bicho, psíquico).
+eficaz(bicho, psiquico).
 eficaz(bicho, siniestro).
 eficaz(dragón, dragón).
 eficaz(electrico, agua).
@@ -406,14 +169,14 @@ eficaz(lucha, normal).
 eficaz(planta, agua).
 eficaz(planta, tierra).
 eficaz(planta, roca).
-eficaz(psíquico, lucha).
-eficaz(psíquico, veneno).
+eficaz(psiquico, lucha).
+eficaz(psiquico, veneno).
 eficaz(roca, bicho).
 eficaz(roca, fuego).
 eficaz(roca, hielo).
 eficaz(roca, volador).
 eficaz(siniestro, fantasma).
-eficaz(siniestro, psíquico).
+eficaz(siniestro, psiquico).
 eficaz(tierra, acero).
 eficaz(tierra, fuego).
 eficaz(tierra, roca).
@@ -454,7 +217,7 @@ debil(hielo, hielo).
 debil(hielo, acero).
 debil(lucha, veneno).
 debil(lucha, volador).
-debil(lucha, psíquico).
+debil(lucha, psiquico).
 debil(lucha, fantasma).
 debil(lucha, bicho).
 debil(normal, roca).
@@ -492,6 +255,152 @@ inmune(fantasma, normal).
 inmune(fantasma, lucha).
 inmune(acero, veneno).
 inmune(lucha, fantasma).
-inmune(psiqico, siniestro).
+inmune(psiquico, siniestro).
 inmune(tierra, eléctrico).
 inmune(volador, tierra).
+
+% Reglas de consulta
+
+% Regla para obtener los tipos de un Pokémon
+tipos_de_pokemon(Pokemon, Tipos) :-
+    findall(Tipo, tipo(Pokemon, Tipo), Tipos).
+
+% Regla para determinar si un Pokémon es eficaz contra otro
+es_eficaz_contra(PokemonAtacante, PokemonDefensor) :-
+    tipos_de_pokemon(PokemonAtacante, TiposAtacante),
+    tipos_de_pokemon(PokemonDefensor, TiposDefensor),
+    member(TipoAtacante, TiposAtacante),
+    member(TipoDefensor, TiposDefensor),
+    eficaz(TipoAtacante, TipoDefensor).
+
+% Regla para determinar si un Pokémon es débil contra otro
+es_debil_contra(PokemonAtacante, PokemonDefensor) :-
+    tipos_de_pokemon(PokemonAtacante, TiposAtacante),
+    tipos_de_pokemon(PokemonDefensor, TiposDefensor),
+    member(TipoAtacante, TiposAtacante),
+    member(TipoDefensor, TiposDefensor),
+    debil(TipoAtacante, TipoDefensor).
+
+% Regla para determinar si un Pokémon es inmune contra otro
+es_inmune_contra(PokemonAtacante, PokemonDefensor) :-
+    tipos_de_pokemon(PokemonAtacante, TiposAtacante),
+    tipos_de_pokemon(PokemonDefensor, TiposDefensor),
+    member(TipoAtacante, TiposAtacante),
+    member(TipoDefensor, TiposDefensor),
+    inmune(TipoAtacante, TipoDefensor).
+
+% Regla para determinar la eficacia global de un Pokémon contra otro
+eficacia_global(PokemonAtacante, PokemonDefensor, Eficacia) :-
+    tipos_de_pokemon(PokemonAtacante, TiposAtacante),
+    tipos_de_pokemon(PokemonDefensor, TiposDefensor),
+    findall(E, (
+        member(TipoAtacante, TiposAtacante),
+        member(TipoDefensor, TiposDefensor),
+        (eficaz(TipoAtacante, TipoDefensor) -> E = 2 ; E = 1)
+    ), Eficacias),
+    prod_lista(Eficacias, Eficacia).
+
+% Regla para calcular el producto de los elementos de una lista
+prod_lista([], 1).
+prod_lista([X|Xs], Prod) :-
+    prod_lista(Xs, Resto),
+    Prod is X * Resto.
+
+% Regla para recomendar Pokémon basados en preferencias de tipo
+recomendar_pokemon_preferencias(TipoPreferido, Recomendacion) :-
+    findall(Pokemon, (
+        pokemon(Pokemon),
+        tipos_de_pokemon(Pokemon, Tipos),
+        (member(TipoPreferido, Tipos) ->
+            true
+            ;
+            tipos_eficaces_contra(TipoPreferido, Tipos, TiposEficaces),
+            member(Pokemon, TiposEficaces)
+        )
+    ), ListaRecomendaciones),
+    length(ListaRecomendaciones, Longitud),
+    Longitud > 0,
+    random_member(Recomendacion, ListaRecomendaciones).
+
+% Regla para obtener tipos eficaces contra un tipo dado
+tipos_eficaces_contra(Tipo, TiposOriginales, TiposEficaces) :-
+    findall(TipoEficaz, (
+        eficaz(Tipo, TipoEficaz),
+        member(TipoEficaz, TiposOriginales)
+    ), TiposEficaces).
+
+% Menú de selección de opciones
+menu :-
+    write('1. Consultar tipos de un Pokémon'), nl,
+    write('2. Determinar si un Pokémon es eficaz contra otro'), nl,
+    write('3. Determinar si un Pokémon es débil contra otro'), nl,
+    write('4. Determinar si un Pokémon es inmune contra otro'), nl,
+    write('5. Calcular eficacia global de un Pokémon contra otro'), nl,
+    write('6. Recomendar Pokémon basado en preferencias de tipo'), nl,
+    write('7. Salir'), nl,
+    write('Ingrese el número de la opción deseada: '),
+    read(Opcion),
+    ejecutar_opcion(Opcion).
+
+% Regla para ejecutar la opción seleccionada
+ejecutar_opcion(1) :-
+    write('Ingrese el nombre del Pokémon: '),
+    read(Pokemon),
+    tipos_de_pokemon(Pokemon, Tipos),
+    write('Tipos de '), write(Pokemon), write(': '), write(Tipos), nl,
+    menu.
+
+ejecutar_opcion(2) :-
+    write('Ingrese el nombre del Pokémon atacante: '),
+    read(Atacante),
+    write('Ingrese el nombre del Pokémon defensor: '),
+    read(Defensor),
+    (es_eficaz_contra(Atacante, Defensor) ->
+        write(Atacante), write(' es eficaz contra '), write(Defensor), nl;
+        write(Atacante), write(' no es eficaz contra '), write(Defensor), nl),
+    menu.
+
+ejecutar_opcion(3) :-
+    write('Ingrese el nombre del Pokémon atacante: '),
+    read(Atacante),
+    write('Ingrese el nombre del Pokémon defensor: '),
+    read(Defensor),
+    (es_debil_contra(Atacante, Defensor) ->
+        write(Atacante), write(' es débil contra '), write(Defensor), nl;
+        write(Atacante), write(' no es débil contra '), write(Defensor), nl),
+    menu.
+
+ejecutar_opcion(4) :-
+    write('Ingrese el nombre del Pokémon atacante: '),
+    read(Atacante),
+    write('Ingrese el nombre del Pokémon defensor: '),
+    read(Defensor),
+    (es_inmune_contra(Atacante, Defensor) ->
+        write(Atacante), write(' es inmune contra '), write(Defensor), nl;
+        write(Atacante), write(' no es inmune contra '), write(Defensor), nl),
+    menu.
+
+ejecutar_opcion(5) :-
+    write('Ingrese el nombre del Pokémon atacante: '),
+    read(Atacante),
+    write('Ingrese el nombre del Pokémon defensor: '),
+    read(Defensor),
+    eficacia_global(Atacante, Defensor, Eficacia),
+    write('Eficacia global de '), write(Atacante), write(' contra '), write(Defensor),
+    write(': '), write(Eficacia), nl,
+    menu.
+
+% Nueva regla para la opción 6
+ejecutar_opcion(6) :-
+    write('Ingrese su tipo de Pokémon preferido: '),
+    read(TipoPreferido),
+    recomendar_pokemon_preferencias(TipoPreferido, Recomendacion),
+    write('Se recomienda el Pokémon: '), write(Recomendacion), nl,
+    menu.
+
+ejecutar_opcion(7) :- write('¡Hasta luego!'), nl.
+
+ejecutar_opcion(_) :- write('Opción no válida. Inténtelo de nuevo.'), nl, menu.
+
+% Iniciar el programa llamando a la regla del menú
+:- menu.
